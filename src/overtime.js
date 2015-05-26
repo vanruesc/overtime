@@ -1,6 +1,6 @@
 "use strict";
 
-var EventDispatcher = require("./eventdispatcher.js");
+var EventDispatcher = require("./eventdispatcher");
 
 /**
  * Overtime.

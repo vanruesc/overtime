@@ -31,7 +31,7 @@ function EventDispatcher()
 }
 
 /**
- * Adds an event listener exists.
+ * Adds an event listener.
  *
  * @param {string} type - The event type.
  * @param {function} listener - The event listener.
@@ -66,7 +66,7 @@ EventDispatcher.prototype.hasEventListener = function(type, listener)
 };
 
 /**
- * Removes an event listener exists.
+ * Removes an event listener.
  *
  * @param {string} type - The event type.
  * @param {function} listener - The event listener.
@@ -125,7 +125,7 @@ module.exports = EventDispatcher;
 },{}],2:[function(require,module,exports){
 "use strict";
 
-var EventDispatcher = require("./eventdispatcher.js");
+var EventDispatcher = require("./eventdispatcher");
 
 /**
  * Overtime.
@@ -291,5 +291,5 @@ Overtime.TimeMeasure = Object.freeze({
 // Reveal public members.
 module.exports = Overtime;
 
-},{"./eventdispatcher.js":1}]},{},[2])(2)
+},{"./eventdispatcher":1}]},{},[2])(2)
 });
