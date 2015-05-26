@@ -16,6 +16,11 @@
        timeMeasure: Overtime.TimeMeasure.SECONDS,
        container: document.getElementById("myContainer")
       });
+
+      ot.addEventListener("elapsed", function()
+      {
+        console.log("Time ran out.");
+      });
     });
 
     </script>

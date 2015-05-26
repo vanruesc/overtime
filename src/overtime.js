@@ -1,5 +1,7 @@
 "use strict";
 
+var EventDispatcher = require("./eventdispatcher.js");
+
 /**
  * Overtime.
  * A time limit visualization library.
@@ -14,13 +16,13 @@ function Overtime(options)
 {
  var canvas;
 
+ EventDispatcher.call(this);
+
  this.TWO_PI = Math.PI * 2.0;
  this.ctx = null;
- this.dt = 1.0 / 60.0;
- this.now = Date.now() / 1000;
+ this.now = Date.now();
  this.then = this.now;
  this.animId = 0;
- this.accumulator = 0;
 
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
  this.t = 0;
@@ -28,9 +30,8 @@ function Overtime(options)
  if(options !== undefined)
  {
   // Take it, but round it. Just in case.
-  if(options.frequency !== undefined && typeof options.frequency === "number" && options.frequency > 0) { this.frequency = options.frequency | 0; }
-  if(options.timeMeasure !== undefined && typeof options.timeMeasure === "number") { this.tm = options.timeMeasure | 0; }
-  if(options.time !== undefined && typeof options.time === "number") { this.t = options.time | 0; }
+  if(typeof options.timeMeasure === "number") { this.tm = options.timeMeasure | 0; }
+  if(typeof options.time === "number") { this.t = options.time | 0; }
 
   if(options.container !== undefined)
   {
@@ -39,20 +40,27 @@ function Overtime(options)
    canvas.height = 300;
    options.container.appendChild(canvas);
    this.ctx = canvas.getContext("2d");
-   this.ctx.strokeStyle = "rgba(40, 30, 20, 0.6)";
-   this.ctx.lineWidth = 30;
+   this.ctx.strokeStyle = "rgba(255, 160, 0, 0.9)";
+   this.ctx.lineWidth = 32;
   }
  }
 
  this.t *= this.tm;
  this.T = this.t;
- if(this.ctx !== null) { this.render(); }
+
+ if(this.ctx !== null)
+ {
+  this.render();
+ }
 }
+
+Overtime.prototype = Object.create(EventDispatcher.prototype);
+Overtime.prototype.constructor = Overtime;
 
 /**
  * Getter and Setter for the internal canvas.
  * 
- * @param {HTMLElement} c - The new canvas to draw on.
+ * @param {canvas} c - The new canvas to draw on.
  */
 
 Object.defineProperty(Overtime.prototype, "canvas", {
@@ -100,18 +108,10 @@ Overtime.prototype.render = function()
 
  ctx.clearRect(0, 0, w, h);
 
- this.now = Date.now() / 1000;
+ this.now = Date.now();
  elapsed = this.now - this.then;
- this.accumulator += elapsed;
  this.then = this.now;
-
- if(this.accumulator >= this.dt)
- {
-  this.t -= this.dt;
-  this.accumulator -= this.dt;
- }
-
- this.t -= elapsed * 1000;
+ this.t -= elapsed;
 
  radius -= ctx.lineWidth;
  endAngle = startAngle + this.TWO_PI * ((this.T - this.t) / this.T);
@@ -125,6 +125,10 @@ Overtime.prototype.render = function()
   {
    self.render();
   });
+ }
+ else
+ {
+  this.dispatchEvent(new Event("elapsed"));
  }
 };
 

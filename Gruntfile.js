@@ -25,7 +25,7 @@ module.exports = function(grunt)
     },
     browserify: {
       build: {
-        src: ["<%= jshint.lib.src %>"],
+        src: ["src/<%= pkg.name %>.js"],
         dest: "build/<%= pkg.name %>.js",
         options: {
           banner: "/**\n * <%= pkg.name %> build <%= grunt.template.today(\"dd.mm.yyyy\") %>\n *\n<%= license %>\n */\n",
