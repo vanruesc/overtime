@@ -5,7 +5,8 @@ Overtime is a stop watch library that visualizes time limits in 2D by using the 
 ## Usage
 
 ```javascript
-var ot = new Overtime();
+var canvas = document.createElement("canvas"),
+ ot = new Overtime(canvas);
 ```
 
 ## Contributing
