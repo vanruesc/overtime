@@ -12,7 +12,7 @@ function EventDispatcher()
 }
 
 /**
- * Adds an event listener exists.
+ * Adds an event listener.
  *
  * @param {string} type - The event type.
  * @param {function} listener - The event listener.
@@ -47,7 +47,7 @@ EventDispatcher.prototype.hasEventListener = function(type, listener)
 };
 
 /**
- * Removes an event listener exists.
+ * Removes an event listener.
  *
  * @param {string} type - The event type.
  * @param {function} listener - The event listener.
