@@ -8,8 +8,8 @@ var EventDispatcher = require("./eventdispatcher");
  *
  * @param {Object} options - The settings.
  * @param {number} options.time - The time limit.
+ * @param {Array} [options.size] - The size of the canvas as an array: [width, height].
  * @param {Overtime.TimeMeasure} [options.timeMeasure] - The time measure of the supplied time limit. Falls back to seconds.
- * @param {HTMLElement} [options.container] - The container to place the canvas in. If not supplied, no canvas will be created.
  */
 
 function Overtime(options)
@@ -20,11 +20,15 @@ function Overtime(options)
 
  this.TWO_PI = Math.PI * 2.0;
  this.HALF_PI = Math.PI * 0.5;
- this.startAngle = -this.HALF_PI;
- this.ctx = null;
  this.animId = 0;
  this.now = Date.now();
  this.then = this.now;
+ this.ctx = null;
+ this.startAngle = -this.HALF_PI;
+ this.threshold = 0.023; // Chrome hack.
+ this.fullCircle = this.startAngle + this.TWO_PI;
+ this.primaryStrokeStyle = "rgba(255, 100, 0, 0.9)";
+ this.secondaryStrokeStyle = "rgba(0, 0, 0, 0.1)";
 
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
  this.t = 0;
@@ -37,11 +41,17 @@ function Overtime(options)
   if(document !== undefined)
   {
    canvas = document.createElement("canvas");
-   canvas.width = 300;
-   canvas.height = 300;
+   canvas.id = "overtime";
+
+   if(options.size !== undefined)
+   {
+    canvas.width = options.size[0];
+    canvas.height = options.size[1];
+   }
+
    this.ctx = canvas.getContext("2d");
-   this.ctx.strokeStyle = "rgba(255, 160, 0, 0.9)";
-   this.ctx.lineWidth = canvas.width < canvas.height ? canvas.width * 0.1 : canvas.height * 0.1;
+   this.ctx.strokeStyle = this.primaryStrokeStyle;
+   this.ctx.lineWidth = (canvas.width < canvas.height) ? canvas.width * 0.05 : canvas.height * 0.05;
   }
  }
 
@@ -70,8 +80,8 @@ Object.defineProperty(Overtime.prototype, "canvas", {
   if(c !== undefined && c.getContext !== undefined)
   {
    this.ctx = c.getContext("2d");
-   this.ctx.strokeStyle = "rgba(255, 160, 0, 0.9)";
-   this.ctx.lineWidth = (c.width < c.height) ? c.width * 0.1 : c.height * 0.1;
+   this.ctx.strokeStyle = this.primaryStrokeStyle;
+   this.ctx.lineWidth = (c.width < c.height) ? c.width * 0.05 : c.height * 0.05;
   }
  }
 });
@@ -96,8 +106,7 @@ Object.defineProperty(Overtime.prototype, "time", {
 
 /**
  * Getter and Setter for the time measure.
- * The current time will not be converted to the new time measure!
- * Use convertToTimeMeasure() for this instead.
+ * The current time will not be affected by this in any way.
  * 
  * @param {Overtime.TimeMeasure} tm - The new time measure.
  */
@@ -114,58 +123,98 @@ Object.defineProperty(Overtime.prototype, "timeMeasure", {
 });
 
 /**
+ * Getter and Setter for the size of the internal canvas.
+ * 
+ * @param {Array} s - The new size in the form of [width, height].
+ */
+
+Object.defineProperty(Overtime.prototype, "size", {
+ get: function()
+ {
+  return [
+   this.ctx.canvas.width,
+   this.ctx.canvas.height
+  ];
+ },
+ set: function(s)
+ {
+  if(s !== undefined)
+  {
+   this.ctx.canvas.width = s[0];
+   this.ctx.canvas.height = s[1];
+   this.ctx.lineWidth = (s[0] < s[1]) ? s[0] * 0.05 : s[1] * 0.05;
+   this.render();
+  }
+ }
+});
+
+/**
  * Renders the time progress on the canvas.
- * This is the main loop.
  */
 
 Overtime.prototype.render = function()
 {
- var self = this,
-  ctx = this.ctx,
+ var ctx = this.ctx,
   w = ctx.canvas.width,
   h = ctx.canvas.height,
   hw = w >> 1, hh = h >> 1,
   radius = w < h ? hw : hh,
-  fullCircle = this.startAngle + this.TWO_PI,
-  endAngle, elapsed, style;
+  endAngle,
+  tooThin; // Chrome hack.
 
  ctx.clearRect(0, 0, w, h);
 
- /*
-  * Don't bleed over the edge.
-  * (The canvas' size might change, so the
-  * radius is always being recalculated.)
-  */
+ // Don't bleed over the edge.
  radius -= ctx.lineWidth;
+
+ // Draw the progress.
+ endAngle = this.startAngle + this.TWO_PI * ((this.T - this.t) / this.T);
+ tooThin = (endAngle - this.startAngle < this.threshold); // Chrome hack.
+ ctx.strokeStyle = this.primaryStrokeStyle;
+ ctx.beginPath();
+ ctx.arc(hw, hh, radius, tooThin ? this.startAngle - this.threshold : this.startAngle, endAngle, false); // Chrome hack.
+ //ctx.arc(hw, hh, radius, this.startAngle, endAngle, false);
+ ctx.stroke();
+ if(tooThin) { ctx.clearRect(0, 0, hw - this.threshold, hh); } // Chrome hack.
+
+ // Draw the rest of the circle in another color.
+ if(endAngle< this.fullCircle)
+ {
+  // No hacking here cause can't clear.
+  ctx.strokeStyle = this.secondaryStrokeStyle;
+  ctx.beginPath();
+  ctx.arc(hw, hh, radius, endAngle, this.fullCircle, false);
+  ctx.stroke();
+ }
+};
+
+/**
+ * Steps the system forward.
+ * This is the main loop.
+ */
+
+Overtime.prototype.step = function()
+{
+ var self = this,
+  elapsed;
 
  // Calculate the time span between this run and the last.
  this.now = Date.now();
  elapsed = this.now - this.then;
  this.then = this.now;
+
+ // Update the time.
  this.t -= elapsed;
 
- // Draw the progress.
- endAngle = this.startAngle + this.TWO_PI * ((this.T - this.t) / this.T);
- ctx.beginPath();
- ctx.arc(hw, hh, radius, this.startAngle, endAngle, false);
- ctx.stroke();
+ // Render the current state.
+ this.render();
 
- // Draw the rest of the circle in another color.
- if(endAngle < fullCircle)
- {
-  style = ctx.strokeStyle;
-  ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
-  ctx.beginPath();
-  ctx.arc(hw, hh, radius, endAngle, fullCircle, false);
-  ctx.stroke();
-  ctx.strokeStyle = style;
- }
-
+ // Continue or exit.
  if(this.t > 0)
  {
   this.animId = requestAnimationFrame(function()
   {
-   self.render();
+   self.step();
   });
  }
  else
@@ -175,7 +224,7 @@ Overtime.prototype.render = function()
 };
 
 /**
- * Stops the rendering cycle. Does nothing more than that.
+ * Stops the rendering cycle. Does nothing else besides that.
  */
 
 Overtime.prototype.stop = function()
@@ -188,25 +237,27 @@ Overtime.prototype.stop = function()
 };
 
 /**
- * Tries to stop the rendering cycle first if it is still
- * running and then starts it again.
+ * Tries to start the rendering cycle if it isn't
+ * running. Restarts it otherwise.
  */
 
 Overtime.prototype.start = function()
 {
  this.stop();
- this.render();
+ this.now = Date.now();
+ this.then = this.now;
+ this.step();
 };
 
 /**
- * Sets the time back to its original length and starts the system anew.
+ * Sets the time back to its original length.
  */
 
 Overtime.prototype.rewind = function()
 {
  this.stop();
  this.t = this.T;
- this.start();
+ this.render();
 };
 
 /**
@@ -214,31 +265,54 @@ Overtime.prototype.rewind = function()
  * the currently set time measure for that value.
  * The time will not go back beyond the initial length.
  *
- * @param {number} t - The time value by which to rewind. Will be interpreted according to the current time measure.
+ * @param {number} t - The time by which to rewind. Interpreted according to the current time measure. A negative value corresponds to fast-forwarding.
  */
 
 Overtime.prototype.rewindBy = function(t)
 {
  this.stop();
- this.t += t;
+ this.t += t * this.tm;
  if(this.t > this.T) { this.t = this.T; }
- this.start();
+ this.render();
 };
 
 /**
- * Converts the current time to the new time measure.
- * This will reset the time to its initial length.
- * 
- * @param {Overtime.TimeMeasure} tm - The new time measure.
+ * Goes ahead in time by a given value.
+ *
+ * @param {number} t - The time value by which to rewind. Will be interpreted according to the current time measure. A negative value corresponds to rewinding.
  */
 
-Overtime.prototype.convertToTimeMeasure = function(tm)
+Overtime.prototype.fastForwardBy = function(t)
 {
- this.t = this.T;
- this.t /= this.tm;
- this.tm = tm;
- this.t *= this.tm;
- this.T = this.t;
+ this.rewindBy(-t);
+};
+
+/**
+ * Adds time.
+ *
+ * @param {number} t - The time value to add. Will be interpreted according to the current time measure. A negative corresponds to shortening.
+ */
+
+Overtime.prototype.prolongBy = function(t)
+{
+ this.stop();
+ t *= this.tm;
+ this.stop();
+ this.t += t;
+ this.T += t;
+ if(this.T < 0) { this.T = this.t = 0; }
+ this.render();
+};
+
+/**
+ * Goes back in time by a given value.
+ *
+ * @param {number} t - The time value to subtract. Will be interpreted according to the current time measure. A negative value corresponds to prolonging.
+ */
+
+Overtime.prototype.shortenBy = function(t)
+{
+ this.prolongBy(-t);
 };
 
 /**
