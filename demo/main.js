@@ -25,7 +25,7 @@ var overtime = new Overtime({
  *
  * If you want to rely on the sizes of DOM elements 
  * such as the body of your page, you'll use the
- * "load"-event of the window object.
+ * "load"-event of the window object instead.
  */
 
 window.addEventListener("load", function init()

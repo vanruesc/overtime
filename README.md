@@ -4,13 +4,13 @@ Overtime is a stop watch library that visualizes time limits in 2D by using the 
 
 ## Usage
 
-Download the [minified library](http://vanruesc.github.io/overtime/build/overtime.min.js) and include it on your page:
+Download the [minified library](http://vanruesc.github.io/overtime/build/overtime.min.js) and include it in your project:
 
 ```html
 <script src="/js/overtime.min.js"></script>
 ```
 
-Then use Overtime in your like this:
+Then use Overtime like this:
 
 ```javascript
 // Create an Overtime instance.
@@ -30,7 +30,7 @@ var overtime = new Overtime({
  *
  * If you want to rely on the sizes of DOM elements 
  * such as the body of your page, you'll use the
- * "load"-event of the window object.
+ * "load"-event of the window object instead.
  */
 
 window.addEventListener("load", function init()
@@ -63,7 +63,7 @@ window.addEventListener("load", function init()
 
 ## Example
 
-To see how Overtime works, you may take a look at this [example](https://jsfiddle.net/vanruesc/2Lv3kc02/2/).
+To see how Overtime works, you may take a look at this [example](https://bla).
 
 ## Contributing
 Maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code.
