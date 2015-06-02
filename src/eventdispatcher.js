@@ -84,7 +84,7 @@ EventDispatcher.prototype.dispatchEvent = function(event)
 
  if(listenerArray !== undefined)
  {
-  //event.target = this; // Not writable.
+  event.target = this;
   array = [];
   length = listenerArray.length;
 
