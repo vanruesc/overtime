@@ -10,27 +10,26 @@
 
 // Create an Overtime instance.
 var overtime = new Overtime({
- time: 5,
- timeMeasure: Overtime.TimeMeasure.SECONDS,
- size: [420, 420]
+ time: 2,
+ timeMeasure: Overtime.TimeMeasure.MINUTES,
+ size: [13, 37]
 });
 
 /*
- * At some point, you may actually want to show the 
- * output of Overtime on your website.
- *
- * In order to append its canvas to your page, you'll 
- * have to listen for the "DOMContentLoaded"-event of
- * the document object.
+ * In order to append the canvas of Overtime to your 
+ * website, you'll have to listen for the document's
+ * "DOMContentLoaded"-event.
  *
  * If you want to rely on the sizes of DOM elements 
- * such as the body of your page, you'll use the
+ * such as the body of your page, you should use the
  * "load"-event of the window object instead.
  */
 
 window.addEventListener("load", function init()
 {
- var container = document.getElementById("container");
+ var container = document.getElementById("container"),
+  t = document.getElementById("t"),
+  tm = document.getElementById("tm");
 
  // Grab the output canvas and put it on the page.
  container.appendChild(overtime.canvas);
@@ -42,9 +41,6 @@ window.addEventListener("load", function init()
   // Set the size of the canvas: [width, height].
   min -= 10;
   overtime.size = [min, min];
-
-  // Center it vertically.
-  //overtime.canvas.style.marginTop = (Math.abs(container.offsetWidth - container.offsetHeight) >> 1) + "px";
  }
 
  // Set the size right now.
@@ -56,13 +52,25 @@ window.addEventListener("load", function init()
  // Do something when the time elapsed.
  overtime.addEventListener("elapsed", function()
  {
-  document.getElementById("textualOutput").innerHTML = "Time's up.";
+  document.getElementById("textualOutput").innerHTML = "Time's up!";
+ });
+
+ // Make use of Overtime's "update"-event.
+ overtime.addEventListener("update", function()
+ {
+  document.getElementById("textualOutput").innerHTML = overtime.time;
  });
 
  // Control Overtime.
  document.getElementById("stop").addEventListener("click", function() { overtime.stop(); });
  document.getElementById("start").addEventListener("click", function() { overtime.start(); });
  document.getElementById("rewind").addEventListener("click", function() { overtime.rewind(); });
+ document.getElementById("rewindBy").addEventListener("click", function() { overtime.rewindBy(parseInt(t.value)); });
+ document.getElementById("advanceBy").addEventListener("click", function() { overtime.advanceBy(parseInt(t.value)); });
+ document.getElementById("prolongBy").addEventListener("click", function() { overtime.prolongBy(parseInt(t.value)); });
+ document.getElementById("shortenBy").addEventListener("click", function() { overtime.shortenBy(parseInt(t.value)); });
+ document.getElementById("set").addEventListener("click", function() { overtime.time = parseInt(t.value); });
+ tm.addEventListener("change", function() { overtime.tm = parseInt(tm.value); });
 
  // Clean up.
  window.removeEventListener("load", init);

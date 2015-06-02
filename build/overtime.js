@@ -103,7 +103,7 @@ EventDispatcher.prototype.dispatchEvent = function(event)
 
  if(listenerArray !== undefined)
  {
-  //event.target = this; // Not writable.
+  event.target = this;
   array = [];
   length = listenerArray.length;
 
@@ -134,7 +134,7 @@ var EventDispatcher = require("./eventdispatcher");
  * @param {Object} options - The settings.
  * @param {number} options.time - The time limit.
  * @param {Array} [options.size] - The size of the canvas as an array: [width, height].
- * @param {Overtime.TimeMeasure} [options.timeMeasure] - The time measure of the supplied time limit. Falls back to seconds.
+ * @param {Overtime.TimeMeasure} [options.timeMeasure] - The time measure of the supplied time limit. Defaults to seconds.
  */
 
 function Overtime(options)
@@ -154,14 +154,15 @@ function Overtime(options)
  this.fullCircle = this.startAngle + this.TWO_PI;
  this.primaryStrokeStyle = "rgba(255, 100, 0, 0.9)";
  this.secondaryStrokeStyle = "rgba(0, 0, 0, 0.1)";
+ this.updateEvent = {type: "update"};
 
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
  this.t = 0;
 
  if(options !== undefined)
  {
-  if(typeof options.timeMeasure === "number") { this.tm = options.timeMeasure; }
-  if(typeof options.time === "number") { this.t = options.time; }
+  if(options.timeMeasure > 0) { this.tm = options.timeMeasure; }
+  if(options.time >= 0) { this.t = options.time; }
 
   if(document !== undefined)
   {
@@ -174,9 +175,7 @@ function Overtime(options)
     canvas.height = options.size[1];
    }
 
-   this.ctx = canvas.getContext("2d");
-   this.ctx.strokeStyle = this.primaryStrokeStyle;
-   this.ctx.lineWidth = (canvas.width < canvas.height) ? canvas.width * 0.05 : canvas.height * 0.05;
+   this.canvas = canvas;
   }
  }
 
@@ -204,9 +203,11 @@ Object.defineProperty(Overtime.prototype, "canvas", {
  {
   if(c !== undefined && c.getContext !== undefined)
   {
+   this.stop();
    this.ctx = c.getContext("2d");
    this.ctx.strokeStyle = this.primaryStrokeStyle;
    this.ctx.lineWidth = (c.width < c.height) ? c.width * 0.05 : c.height * 0.05;
+   this.render();
   }
  }
 });
@@ -221,10 +222,12 @@ Object.defineProperty(Overtime.prototype, "time", {
  get: function() { return this.t; },
  set: function(t)
  {
-  if(typeof t === "number")
+  if(t >= 0)
   {
+   this.stop();
    this.t = t * this.tm;
    this.T = this.t;
+   this.render();
   }
  }
 });
@@ -240,7 +243,7 @@ Object.defineProperty(Overtime.prototype, "timeMeasure", {
  get: function() { return this.tm; },
  set: function(tm)
  {
-  if(typeof tm === "number")
+  if(tm > 0)
   {
    this.tm = tm;
   }
@@ -318,7 +321,7 @@ Overtime.prototype.render = function()
  * This is the main loop.
  */
 
-Overtime.prototype.step = function()
+Overtime.prototype.update = function()
 {
  var self = this,
   elapsed;
@@ -330,6 +333,7 @@ Overtime.prototype.step = function()
 
  // Update the time.
  this.t -= elapsed;
+ this.dispatchEvent(this.updateEvent);
 
  // Render the current state.
  this.render();
@@ -339,12 +343,12 @@ Overtime.prototype.step = function()
  {
   this.animId = requestAnimationFrame(function()
   {
-   self.step();
+   self.update();
   });
  }
  else
  {
-  this.dispatchEvent(new Event("elapsed"));
+  this.dispatchEvent({type: "elapsed"});
  }
 };
 
@@ -363,7 +367,7 @@ Overtime.prototype.stop = function()
 
 /**
  * Tries to start the rendering cycle if it isn't
- * running. Restarts it otherwise.
+ * running. Otherwise it restarts it.
  */
 
 Overtime.prototype.start = function()
@@ -371,7 +375,7 @@ Overtime.prototype.start = function()
  this.stop();
  this.now = Date.now();
  this.then = this.now;
- this.step();
+ this.update();
 };
 
 /**
@@ -386,8 +390,7 @@ Overtime.prototype.rewind = function()
 };
 
 /**
- * Sets the time back by the given value. Uses
- * the currently set time measure for that value.
+ * Sets the time back by the given value.
  * The time will not go back beyond the initial length.
  *
  * @param {number} t - The time by which to rewind. Interpreted according to the current time measure. A negative value corresponds to fast-forwarding.
@@ -395,10 +398,13 @@ Overtime.prototype.rewind = function()
 
 Overtime.prototype.rewindBy = function(t)
 {
- this.stop();
- this.t += t * this.tm;
- if(this.t > this.T) { this.t = this.T; }
- this.render();
+ if(typeof t === "number" && !isNaN(t))
+ {
+  this.stop();
+  this.t += t * this.tm;
+  if(this.t > this.T) { this.t = this.T; }
+  this.render();
+ }
 };
 
 /**
@@ -407,37 +413,46 @@ Overtime.prototype.rewindBy = function(t)
  * @param {number} t - The time value by which to rewind. Will be interpreted according to the current time measure. A negative value corresponds to rewinding.
  */
 
-Overtime.prototype.fastForwardBy = function(t)
+Overtime.prototype.advanceBy = function(t)
 {
- this.rewindBy(-t);
+ if(typeof t === "number" && !isNaN(t))
+ {
+  this.rewindBy(-t);
+ }
 };
 
 /**
  * Adds time.
  *
- * @param {number} t - The time value to add. Will be interpreted according to the current time measure. A negative corresponds to shortening.
+ * @param {number} t - The time value to add. Will be interpreted according to the current time measure. A negative value corresponds to shortening.
  */
 
 Overtime.prototype.prolongBy = function(t)
 {
- this.stop();
- t *= this.tm;
- this.stop();
- this.t += t;
- this.T += t;
- if(this.T < 0) { this.T = this.t = 0; }
- this.render();
+ if(typeof t === "number" && !isNaN(t))
+ {
+  this.stop();
+  t *= this.tm;
+  this.stop();
+  this.t += t;
+  this.T += t;
+  if(this.T < 0) { this.T = this.t = 0; }
+  this.render();
+ }
 };
 
 /**
- * Goes back in time by a given value.
+ * Reduces the total duration of the countdown.
  *
  * @param {number} t - The time value to subtract. Will be interpreted according to the current time measure. A negative value corresponds to prolonging.
  */
 
 Overtime.prototype.shortenBy = function(t)
 {
- this.prolongBy(-t);
+ if(typeof t === "number" && !isNaN(t))
+ {
+  this.prolongBy(-t);
+ }
 };
 
 /**

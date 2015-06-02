@@ -21,19 +21,16 @@ var overtime = new Overtime({
 });
 
 /*
- * At some point, you may actually want to show the 
- * output of Overtime on your website.
- *
- * In order to append its canvas to your page, you'll 
- * have to listen for the "DOMContentLoaded"-event of
- * the document object.
+ * In order to append the canvas of Overtime to your 
+ * website, you'll have to listen for the document's
+ * "DOMContentLoaded"-event.
  *
  * If you want to rely on the sizes of DOM elements 
- * such as the body of your page, you'll use the
+ * such as the body of your page, you should use the
  * "load"-event of the window object instead.
  */
 
-window.addEventListener("load", function init()
+document.addEventListener("DOMContentLoaded", function init()
 {
  // Grab the output canvas and put it on the page.
  document.getElementById("myContainer").appendChild(overtime.canvas);
@@ -41,7 +38,7 @@ window.addEventListener("load", function init()
  // Do something when the time elapsed.
  overtime.addEventListener("elapsed", function()
  {
-  console.log("Time's up.");
+  console.log("Time's up!");
  });
 
  // Control Overtime.
@@ -63,7 +60,7 @@ window.addEventListener("load", function init()
 
 ## Example
 
-To see how Overtime works, you may take a look at this [example](https://bla).
+To see how Overtime works, you may want to take a look at the [demo](https://vanruesc.github.io/overtime/demo).
 
 ## Contributing
 Maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code.

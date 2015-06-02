@@ -21,7 +21,6 @@ html {
 body {
  font-family: sans-serif;
  font-weight: 100;
- font-size: 4vmin;
  color: rgb(234, 83, 31);
  background-color: rgb(230, 230, 230);
  margin: 0;
@@ -35,7 +34,6 @@ body {
 div {
  padding: 0;
  margin: auto;
- border: none;
 }
 
 div[role="banner"] {
@@ -66,7 +64,7 @@ div[role="contentinfo"] {
 #container {
  position: relative;
  float: right;
- width: 75%;
+ width: 70%;
  height: 100%;
 }
 
@@ -86,24 +84,28 @@ div[role="contentinfo"] {
  position: relative;
  float: left;
  border: 2px dashed rgb(180, 180, 180);
- width: 20%;
+ width: 25%;
  margin: 1%;
  padding: 1%;
  text-align: center;
+}
+
+#controls div {
+ padding: 4%;
 }
 
 #controls input {
  vertical-align: middle;
- width: 20%;
+ margin: 2%;
 }
 
 #textualOutput {
- 
  position: relative;
  float: left;
  border: 2px solid transparent;
- width: 20%;
+ width: 25%;
  margin: 1%;
  padding: 1%;
  text-align: center;
+ font-size: 4vmin;
 }

@@ -18,9 +18,25 @@
     <div role="main">
       <div id="container"><img src="qr.png"></div>
       <div id="controls">
-        <input type="button" value="stop" id="stop">
-        <input type="button" value="start" id="start">
-        <input type="button" value="rewind" id="rewind">
+        <div>
+          <input type="button" value="stop" id="stop">
+          <input type="button" value="start" id="start">
+          <input type="button" value="reset" id="rewind">
+        </div>
+        <div>
+          <select id="tm">
+            <option value="1">Miliseconds</option>
+            <option value="1000">Seconds</option>
+            <option value="60000" selected="selected">Minutes</option>
+            <option value="3600000">Hours</option>
+          </select>
+          <input type="text" value="" id="t">
+          <input type="button" value="set" id="set">
+          <input type="button" value="rewind" id="rewindBy">
+          <input type="button" value="advance" id="advanceBy">
+          <input type="button" value="prolong" id="prolongBy">
+          <input type="button" value="shorten" id="shortenBy">
+        </div>
       </div>
       <div id="textualOutput"></div>
     </div>
