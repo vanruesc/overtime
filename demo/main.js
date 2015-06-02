@@ -72,6 +72,12 @@ window.addEventListener("load", function init()
  document.getElementById("set").addEventListener("click", function() { overtime.time = parseInt(t.value); });
  tm.addEventListener("change", function() { overtime.tm = parseInt(tm.value); });
 
+ // Temporary ad hoc solution.
+ document.getElementById("request").addEventListener("click", function()
+ {
+  document.getElementById("qr").src = "http://caeb-fhbrandenburg.rhcloud.com/v1/qr?" + document.getElementById("uid").value;
+ });
+
  // Clean up.
  window.removeEventListener("load", init);
 });
