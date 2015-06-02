@@ -75,7 +75,7 @@ window.addEventListener("load", function init()
  // Temporary ad hoc solution.
  document.getElementById("request").addEventListener("click", function()
  {
-  document.getElementById("qr").src = "http://caeb-fhbrandenburg.rhcloud.com/v1/qr?" + document.getElementById("uid").value;
+  document.getElementById("qr").src = "https://caeb-fhbrandenburg.rhcloud.com/v1/qr?uid=" + document.getElementById("uid").value;
  });
 
  // Clean up.
