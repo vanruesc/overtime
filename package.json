@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/vanruesc/overtime.git"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/vanruesc/overtime/issues"
   },
   "licenses": [
     {

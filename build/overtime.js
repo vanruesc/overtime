@@ -1,5 +1,5 @@
 /**
- * overtime build 02.06.2015
+ * overtime build 04.06.2015
  *
  * Copyright 2015 Raoul van Rüschen
  * 
@@ -157,12 +157,12 @@ function Overtime(options)
  this.updateEvent = {type: "update"};
 
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
- this.t = 0;
+ this.t = 1;
 
  if(options !== undefined)
  {
   if(options.timeMeasure > 0) { this.tm = options.timeMeasure; }
-  if(options.time >= 0) { this.t = options.time; }
+  if(options.time > 0) { this.t = options.time; }
 
   if(document !== undefined)
   {
@@ -174,17 +174,15 @@ function Overtime(options)
     canvas.width = options.size[0];
     canvas.height = options.size[1];
    }
-
-   this.canvas = canvas;
   }
  }
 
  this.t *= this.tm;
  this.T = this.t;
 
- if(this.ctx !== null)
+ if(canvas !== undefined)
  {
-  this.render();
+  this.canvas = canvas;
  }
 }
 
@@ -206,8 +204,7 @@ Object.defineProperty(Overtime.prototype, "canvas", {
    this.stop();
    this.ctx = c.getContext("2d");
    this.ctx.strokeStyle = this.primaryStrokeStyle;
-   this.ctx.lineWidth = (c.width < c.height) ? c.width * 0.05 : c.height * 0.05;
-   this.render();
+   this.size = [c.width, c.height];
   }
  }
 });
@@ -222,7 +219,7 @@ Object.defineProperty(Overtime.prototype, "time", {
  get: function() { return this.t; },
  set: function(t)
  {
-  if(t >= 0)
+  if(t > 0)
   {
    this.stop();
    this.t = t * this.tm;
@@ -306,7 +303,7 @@ Overtime.prototype.render = function()
  if(tooThin) { ctx.clearRect(0, 0, hw - this.threshold, hh); } // Chrome hack.
 
  // Draw the rest of the circle in another color.
- if(endAngle< this.fullCircle)
+ if(endAngle < this.fullCircle)
  {
   // No hacking here cause can't clear.
   ctx.strokeStyle = this.secondaryStrokeStyle;
@@ -436,7 +433,7 @@ Overtime.prototype.prolongBy = function(t)
   this.stop();
   this.t += t;
   this.T += t;
-  if(this.T < 0) { this.T = this.t = 0; }
+  if(this.T <= 0) { this.T = this.t = 1; }
   this.render();
  }
 };
