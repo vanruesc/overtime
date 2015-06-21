@@ -1,4 +1,4 @@
-# Overtime [![Build Status](https://travis-ci.org/vanruesc/overtime.svg?branch=master)](https://travis-ci.org/vanruesc/overtime)
+# Overtime [![Build Status](https://travis-ci.org/vanruesc/overtime.svg?branch=master)](https://travis-ci.org/vanruesc/overtime) [![GitHub version](https://badge.fury.io/gh/vanruesc%2Fovertime.svg)](http://badge.fury.io/gh/vanruesc%2Fovertime) [![Dependencies](https://david-dm.org/vanruesc/overtime.svg?branch=master)](https://david-dm.org/vanruesc/overtime)
 
 Overtime is a stop watch library that visualizes time limits in 2D by using the Canvas API.
 
