@@ -338,5 +338,4 @@ Overtime.TimeMeasure = Object.freeze({
  HOURS: 3600000
 });
 
-// Reveal public members.
 module.exports = Overtime;

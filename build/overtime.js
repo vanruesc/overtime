@@ -1,7 +1,7 @@
 /**
- * overtime build 04.06.2015
+ * overtime build 21.06.2015
  *
- * Copyright 2015 Raoul van Rüschen
+ * Copyright 2015 Raoul van Rueschen
  * 
  * This software is provided "as-is", without any express or implied warranty. 
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -119,7 +119,6 @@ EventDispatcher.prototype.dispatchEvent = function(event)
  }
 };
 
-// Expose module members.
 module.exports = EventDispatcher;
 
 },{}],2:[function(require,module,exports){
@@ -463,7 +462,6 @@ Overtime.TimeMeasure = Object.freeze({
  HOURS: 3600000
 });
 
-// Reveal public members.
 module.exports = Overtime;
 
 },{"./eventdispatcher":1}]},{},[2])(2)
