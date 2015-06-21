@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function init()
  overtime.time = 1;
 
  // Clean up.
- window.removeEventListener("load", init);
+ document.removeEventListener("DOMContentLoaded", init);
 });
 ```
 
