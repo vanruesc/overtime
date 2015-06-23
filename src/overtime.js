@@ -14,7 +14,8 @@ var EventDispatcher = require("./eventdispatcher");
 
 function Overtime(options)
 {
- var canvas;
+ var self = this,
+  canvas, o;
 
  EventDispatcher.call(this);
 
@@ -32,12 +33,12 @@ function Overtime(options)
  this.updateEvent = {type: "update"};
 
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
- this.t = 0;
+ this.t = 1;
 
  if(options !== undefined)
  {
   if(options.timeMeasure > 0) { this.tm = options.timeMeasure; }
-  if(options.time >= 0) { this.t = options.time; }
+  if(options.time > 0) { this.t = options.time; }
 
   if(document !== undefined)
   {
@@ -49,17 +50,38 @@ function Overtime(options)
     canvas.width = options.size[0];
     canvas.height = options.size[1];
    }
-
-   this.canvas = canvas;
   }
  }
 
  this.t *= this.tm;
  this.T = this.t;
 
- if(this.ctx !== null)
+ // Try to overwrite the time variables with values from a previous session.
+ if(localStorage.getItem("overtime"))
  {
-  this.render();
+  try
+  {
+   o = JSON.parse(localStorage.getItem("overtime"));
+   if(o.tm !== undefined) { this.tm = o.tm; }
+   if(o.t !== undefined) { this.t = o.t; }
+   if(o.T !== undefined) { this.T = o.T; }
+  }
+  catch(e) { /* Swallow. */ }
+ }
+
+ // Store the time values for the next session.
+ window.addEventListener("unload", function()
+ {
+  localStorage.setItem("overtime", JSON.stringify({
+   tm: self.tm,
+   t: self.t,
+   T: self.T
+  }));
+ });
+
+ if(canvas !== undefined)
+ {
+  this.canvas = canvas;
  }
 }
 
@@ -81,8 +103,7 @@ Object.defineProperty(Overtime.prototype, "canvas", {
    this.stop();
    this.ctx = c.getContext("2d");
    this.ctx.strokeStyle = this.primaryStrokeStyle;
-   this.ctx.lineWidth = (c.width < c.height) ? c.width * 0.05 : c.height * 0.05;
-   this.render();
+   this.size = [c.width, c.height];
   }
  }
 });
@@ -97,7 +118,7 @@ Object.defineProperty(Overtime.prototype, "time", {
  get: function() { return this.t; },
  set: function(t)
  {
-  if(t >= 0)
+  if(t > 0)
   {
    this.stop();
    this.t = t * this.tm;
@@ -181,7 +202,7 @@ Overtime.prototype.render = function()
  if(tooThin) { ctx.clearRect(0, 0, hw - this.threshold, hh); } // Chrome hack.
 
  // Draw the rest of the circle in another color.
- if(endAngle< this.fullCircle)
+ if(endAngle < this.fullCircle)
  {
   // No hacking here cause can't clear.
   ctx.strokeStyle = this.secondaryStrokeStyle;
@@ -311,7 +332,7 @@ Overtime.prototype.prolongBy = function(t)
   this.stop();
   this.t += t;
   this.T += t;
-  if(this.T < 0) { this.T = this.t = 0; }
+  if(this.T <= 0) { this.T = this.t = 1; }
   this.render();
  }
 };
@@ -341,5 +362,4 @@ Overtime.TimeMeasure = Object.freeze({
  HOURS: 3600000
 });
 
-// Reveal public members.
 module.exports = Overtime;

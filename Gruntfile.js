@@ -6,6 +6,7 @@ module.exports = function(grunt)
   grunt.initConfig({
     license: require("fs").readFileSync("LICENSE").toString(),
     pkg: grunt.file.readJSON("package.json"),
+
     jshint: {
       options: {
         jshintrc: ".jshintrc"
@@ -15,14 +16,9 @@ module.exports = function(grunt)
       },
       lib: {
         src: ["src/**/*.js"]
-      },
-      test: {
-        src: ["test/**/*.js"]
       }
     },
-    nodeunit: {
-      files: "<%= jshint.test.src %>"
-    },
+
     browserify: {
       build: {
         src: ["src/<%= pkg.name %>.js"],
@@ -35,6 +31,7 @@ module.exports = function(grunt)
         }
       }
     },
+
     uglify: {
       build: {
         options: {
@@ -48,6 +45,7 @@ module.exports = function(grunt)
         }
       }
     },
+
     watch: {
       gruntfile: {
         files: "<%= jshint.gruntfile.src %>",
@@ -55,22 +53,17 @@ module.exports = function(grunt)
       },
       lib: {
         files: "<%= jshint.lib.src %>",
-        tasks: ["jshint:lib", "nodeunit"]
-      },
-      test: {
-        files: "<%= jshint.test.src %>",
-        tasks: ["jshint:test", "nodeunit"]
+        tasks: ["jshint:lib"]
       }
     }
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-contrib-nodeunit");
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-watch");
 
   // Default task.
-  grunt.registerTask("default", ["jshint", "nodeunit", "browserify", "uglify"]);
+  grunt.registerTask("default", ["jshint", "browserify", "uglify"]);
 };
