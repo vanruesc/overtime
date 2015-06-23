@@ -1,5 +1,5 @@
 /**
- * overtime build 21.06.2015
+ * overtime build 23.06.2015
  *
  * Copyright 2015 Raoul van Rueschen
  * 
@@ -138,7 +138,8 @@ var EventDispatcher = require("./eventdispatcher");
 
 function Overtime(options)
 {
- var canvas;
+ var self = this,
+  canvas, o;
 
  EventDispatcher.call(this);
 
@@ -178,6 +179,29 @@ function Overtime(options)
 
  this.t *= this.tm;
  this.T = this.t;
+
+ // Try to overwrite the time variables with values from a previous session.
+ if(localStorage.getItem("overtime"))
+ {
+  try
+  {
+   o = JSON.parse(localStorage.getItem("overtime"));
+   if(o.tm !== undefined) { this.tm = o.tm; }
+   if(o.t !== undefined) { this.t = o.t; }
+   if(o.T !== undefined) { this.T = o.T; }
+  }
+  catch(e) { /* Irrelevant. */ }
+ }
+
+ // Store the time values for the next session.
+ window.addEventListener("unload", function()
+ {
+  localStorage.setItem("overtime", JSON.stringify({
+   tm: self.tm,
+   t: self.t,
+   T: self.T
+  }));
+ });
 
  if(canvas !== undefined)
  {
