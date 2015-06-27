@@ -1,5 +1,5 @@
 /**
- * overtime build 23.06.2015
+ * overtime build 27.06.2015
  *
  * Copyright 2015 Raoul van Rueschen
  * 
@@ -130,6 +130,7 @@ var EventDispatcher = require("./eventdispatcher");
  * Overtime.
  * A time limit visualization library.
  *
+ * @constructor
  * @param {Object} options - The settings.
  * @param {number} options.time - The time limit.
  * @param {Array} [options.size] - The size of the canvas as an array: [width, height].
@@ -190,7 +191,7 @@ function Overtime(options)
    if(o.t !== undefined) { this.t = o.t; }
    if(o.T !== undefined) { this.T = o.T; }
   }
-  catch(e) { /* Irrelevant. */ }
+  catch(e) { /* Swallow. */ }
  }
 
  // Store the time values for the next session.

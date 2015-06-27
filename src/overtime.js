@@ -6,6 +6,7 @@ var EventDispatcher = require("./eventdispatcher");
  * Overtime.
  * A time limit visualization library.
  *
+ * @constructor
  * @param {Object} options - The settings.
  * @param {number} options.time - The time limit.
  * @param {Array} [options.size] - The size of the canvas as an array: [width, height].

@@ -1,11 +1,11 @@
 {
   "name": "overtime",
-  "description": "Overtime is a stop watch library that visualizes time limits in 2D.",
-  "version": "1.0.0",
-  "private": "true",
+  "description": "Overtime is a stop watch library that visualises time limits in 2D.",
+  "keywords": ["time limit", "stopwatch", "canvas", "visualisation"],
+  "version": "0.0.0",
   "homepage": "",
   "author": {
-    "name": "Raoul van Rüschen",
+    "name": "Raoul van Rueschen",
     "email": "vanruesc@fh-brandenburg.de"
   },
   "repository": {
@@ -15,13 +15,8 @@
   "bugs": {
     "url": "https://github.com/vanruesc/overtime/issues"
   },
-  "licenses": [
-    {
-      "type": "Zlib",
-      "url": "http://www.zlib.net/zlib_license.html"
-    }
-  ],
-  "main": "index",
+  "license": "Zlib",
+  "main": "src/overtime",
   "engines": {
     "node": ">= 0.8.0"
   },
@@ -32,6 +27,5 @@
     "grunt-contrib-jshint": "0.11.x",
     "grunt-contrib-uglify": "0.9.x",
     "grunt-contrib-watch": "0.6.x"
-  },
-  "keywords": []
+  }
 }
