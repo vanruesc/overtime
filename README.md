@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/overtime.svg)](http://badge.fury.io/js/overtime) 
 [![Dependencies](https://david-dm.org/vanruesc/overtime.svg?branch=master)](https://david-dm.org/vanruesc/overtime)
 
-Overtime is a JavaScript stopwatch library that visualizes time limits in 2D by using the Canvas API.
+Overtime is a JavaScript stopwatch library that visualises time limits in 2D by using the Canvas API.
 
 ## Usage
 
@@ -81,7 +81,9 @@ To see how Overtime works, you may want to take a look at the [demo](https://van
 Maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
-No release yet.
+_Version: 0.0.0 (28.06.2015)_
+> The library visualises the time progression correctly and 
+> restores its context after the browser has been closed.
 
 ## License
 Copyright (c) 2015 Raoul van Rüschen  
