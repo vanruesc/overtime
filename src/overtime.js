@@ -1,6 +1,6 @@
 "use strict";
 
-var EventDispatcher = require("./eventdispatcher");
+var EventDispatcher = require("@vanruesc/eventdispatcher");
 
 /**
  * Overtime.

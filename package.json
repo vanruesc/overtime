@@ -1,9 +1,9 @@
 {
   "name": "overtime",
-  "description": "Overtime is a stop watch library that visualises time limits in 2D.",
+  "description": "Overtime is a JavaScript stopwatch library that visualises time limits in 2D.",
   "keywords": ["time limit", "stopwatch", "canvas", "visualisation"],
   "version": "0.0.0",
-  "homepage": "",
+  "homepage": "https://github.com/vanruesc/overtime",
   "author": {
     "name": "Raoul van Rueschen",
     "email": "vanruesc@fh-brandenburg.de"
@@ -20,7 +20,9 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@vanruesc/eventdispatcher": "x.x.x"
+  },
   "devDependencies": {
     "grunt": "0.4.x",
     "grunt-browserify": "3.x.x",

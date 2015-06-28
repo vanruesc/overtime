@@ -1,5 +1,5 @@
 /**
- * overtime build 27.06.2015
+ * overtime build 28.06.2015
  *
  * Copyright 2015 Raoul van Rueschen
  * 
@@ -21,8 +21,9 @@
 
 /**
  * Event Dispatcher.
- *
  * A base class for adding and removing event listeners and dispatching events.
+ *
+ * @constructor
  */
 
 function EventDispatcher()
@@ -124,7 +125,7 @@ module.exports = EventDispatcher;
 },{}],2:[function(require,module,exports){
 "use strict";
 
-var EventDispatcher = require("./eventdispatcher");
+var EventDispatcher = require("@vanruesc/eventdispatcher");
 
 /**
  * Overtime.
@@ -489,5 +490,5 @@ Overtime.TimeMeasure = Object.freeze({
 
 module.exports = Overtime;
 
-},{"./eventdispatcher":1}]},{},[2])(2)
+},{"@vanruesc/eventdispatcher":1}]},{},[2])(2)
 });
