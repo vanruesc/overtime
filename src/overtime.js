@@ -1,11 +1,12 @@
 "use strict";
 
-var EventDispatcher = require("./eventdispatcher");
+var EventDispatcher = require("@zayesh/eventdispatcher");
 
 /**
  * Overtime.
  * A time limit visualization library.
  *
+ * @constructor
  * @param {Object} options - The settings.
  * @param {number} options.time - The time limit.
  * @param {Array} [options.size] - The size of the canvas as an array: [width, height].
@@ -14,8 +15,7 @@ var EventDispatcher = require("./eventdispatcher");
 
 function Overtime(options)
 {
- var self = this,
-  canvas, o;
+ var self = this, o;
 
  EventDispatcher.call(this);
 
@@ -35,22 +35,14 @@ function Overtime(options)
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
  this.t = 1;
 
+ this.canvas = document.createElement("canvas");
+ this.canvas.id = "overtime";
+
  if(options !== undefined)
  {
   if(options.timeMeasure > 0) { this.tm = options.timeMeasure; }
   if(options.time > 0) { this.t = options.time; }
-
-  if(document !== undefined)
-  {
-   canvas = document.createElement("canvas");
-   canvas.id = "overtime";
-
-   if(options.size !== undefined)
-   {
-    canvas.width = options.size[0];
-    canvas.height = options.size[1];
-   }
-  }
+  this.size = options.size;
  }
 
  this.t *= this.tm;
@@ -79,10 +71,11 @@ function Overtime(options)
   }));
  });
 
- if(canvas !== undefined)
- {
-  this.canvas = canvas;
- }
+ /**
+  * The internal animation loop.
+  */
+
+ this._update = function() { self.update(); };
 }
 
 Overtime.prototype = Object.create(EventDispatcher.prototype);
@@ -219,8 +212,7 @@ Overtime.prototype.render = function()
 
 Overtime.prototype.update = function()
 {
- var self = this,
-  elapsed;
+ var elapsed;
 
  // Calculate the time span between this run and the last.
  this.now = Date.now();
@@ -237,10 +229,7 @@ Overtime.prototype.update = function()
  // Continue or exit.
  if(this.t > 0)
  {
-  this.animId = requestAnimationFrame(function()
-  {
-   self.update();
-  });
+  this.animId = requestAnimationFrame(this._update);
  }
  else
  {
