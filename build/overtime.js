@@ -1,5 +1,5 @@
 /**
- * overtime build 28.06.2015
+ * overtime build 30.06.2015
  *
  * Copyright 2015 Raoul van Rueschen
  * 
@@ -125,7 +125,7 @@ module.exports = EventDispatcher;
 },{}],2:[function(require,module,exports){
 "use strict";
 
-var EventDispatcher = require("@vanruesc/eventdispatcher");
+var EventDispatcher = require("@zayesh/eventdispatcher");
 
 /**
  * Overtime.
@@ -140,8 +140,7 @@ var EventDispatcher = require("@vanruesc/eventdispatcher");
 
 function Overtime(options)
 {
- var self = this,
-  canvas, o;
+ var self = this, o;
 
  EventDispatcher.call(this);
 
@@ -161,22 +160,14 @@ function Overtime(options)
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
  this.t = 1;
 
+ this.canvas = document.createElement("canvas");
+ this.canvas.id = "overtime";
+
  if(options !== undefined)
  {
   if(options.timeMeasure > 0) { this.tm = options.timeMeasure; }
   if(options.time > 0) { this.t = options.time; }
-
-  if(document !== undefined)
-  {
-   canvas = document.createElement("canvas");
-   canvas.id = "overtime";
-
-   if(options.size !== undefined)
-   {
-    canvas.width = options.size[0];
-    canvas.height = options.size[1];
-   }
-  }
+  this.size = options.size;
  }
 
  this.t *= this.tm;
@@ -205,10 +196,11 @@ function Overtime(options)
   }));
  });
 
- if(canvas !== undefined)
- {
-  this.canvas = canvas;
- }
+ /**
+  * The internal animation loop.
+  */
+
+ this._update = function() { self.update(); };
 }
 
 Overtime.prototype = Object.create(EventDispatcher.prototype);
@@ -345,8 +337,7 @@ Overtime.prototype.render = function()
 
 Overtime.prototype.update = function()
 {
- var self = this,
-  elapsed;
+ var elapsed;
 
  // Calculate the time span between this run and the last.
  this.now = Date.now();
@@ -363,10 +354,7 @@ Overtime.prototype.update = function()
  // Continue or exit.
  if(this.t > 0)
  {
-  this.animId = requestAnimationFrame(function()
-  {
-   self.update();
-  });
+  this.animId = requestAnimationFrame(this._update);
  }
  else
  {
@@ -490,5 +478,5 @@ Overtime.TimeMeasure = Object.freeze({
 
 module.exports = Overtime;
 
-},{"@vanruesc/eventdispatcher":1}]},{},[2])(2)
+},{"@zayesh/eventdispatcher":1}]},{},[2])(2)
 });

@@ -4,9 +4,9 @@
 [![npm version](https://badge.fury.io/js/overtime.svg)](http://badge.fury.io/js/overtime) 
 [![Dependencies](https://david-dm.org/vanruesc/overtime.svg?branch=master)](https://david-dm.org/vanruesc/overtime)
 
-Overtime is a JavaScript stopwatch library that visualises time limits in 2D by using the Canvas API.
+Overtime is a stopwatch library that visualises time limits in 2D by using the Canvas API.
 
-## Usage
+## Installation
 
 Download the [minified library](http://vanruesc.github.io/overtime/build/overtime.min.js) and include it in your project:
 
@@ -14,20 +14,18 @@ Download the [minified library](http://vanruesc.github.io/overtime/build/overtim
 <script src="/js/overtime.min.js"></script>
 ```
 
-You can also install it as a dependency of your project with [npm](https://www.npmjs.com).
+You can also install it with [npm](https://www.npmjs.com).
 
 ```sh
 $ npm install overtime
 ``` 
 
+## Usage
+
 ```javascript
-// Optional way of using it.
+// Note: using require is not necessary with the browser bundle.
 var Overtime = require("overtime");
-```
 
-Then use Overtime like this:
-
-```javascript
 // Create an Overtime instance.
 var overtime = new Overtime({
  time: 5,
