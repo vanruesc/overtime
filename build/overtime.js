@@ -1,5 +1,5 @@
 /**
- * overtime build 30.06.2015
+ * overtime build 07.07.2015
  *
  * Copyright 2015 Raoul van Rueschen
  * 
@@ -40,16 +40,14 @@ function EventDispatcher()
 
 EventDispatcher.prototype.addEventListener = function(type, listener)
 {
- var listeners = this._listeners;
-
- if(listeners[type] === undefined)
+ if(this._listeners[type] === undefined)
  {
-  listeners[type] = [];
+  this._listeners[type] = [];
  }
 
- if(listeners[type].indexOf(listener) === -1)
+ if(this._listeners[type].indexOf(listener) === -1)
  {
-  listeners[type].push(listener);
+  this._listeners[type].push(listener);
  }
 };
 
@@ -62,8 +60,7 @@ EventDispatcher.prototype.addEventListener = function(type, listener)
 
 EventDispatcher.prototype.hasEventListener = function(type, listener)
 {
- var listeners = this._listeners;
- return(listeners[type] !== undefined && listeners[type].indexOf(listener) !== -1);
+ return(this._listeners[type] !== undefined && this._listeners[type].indexOf(listener) !== -1);
 };
 
 /**
@@ -75,17 +72,16 @@ EventDispatcher.prototype.hasEventListener = function(type, listener)
 
 EventDispatcher.prototype.removeEventListener = function(type, listener)
 {
- var listeners = this._listeners,
-  listenerArray = listeners[type],
-  index;
+ var i, listeners = this._listeners,
+  listenerArray = listeners[type];
 
  if(listenerArray !== undefined)
  {
-  index = listenerArray.indexOf(listener);
+  i = listenerArray.indexOf(listener);
 
-  if(index !== -1)
+  if(i !== -1)
   {
-   listenerArray.splice(index, 1);
+   listenerArray.splice(i, 1);
   }
  }
 };
@@ -93,29 +89,21 @@ EventDispatcher.prototype.removeEventListener = function(type, listener)
 /**
  * Dispatches an event to all respective listeners.
  *
- * @param {Event} event - The event.
+ * @param {Object} event - The event.
  */
 
 EventDispatcher.prototype.dispatchEvent = function(event)
 {
- var listeners = this._listeners,
-  listenerArray = listeners[event.type],
-  array, length, i;
+ var i, l, listeners = this._listeners,
+  listenerArray = listeners[event.type];
 
  if(listenerArray !== undefined)
  {
   event.target = this;
-  array = [];
-  length = listenerArray.length;
 
-  for(i = 0; i < length; ++i)
+  for(i = 0, l = listenerArray.length; i < l; ++i)
   {
-   array[i] = listenerArray[i];
-  }
-
-  for(i = 0; i < length; ++i)
-  {
-   array[i].call(this, event);
+   listenerArray[i].call(this, event);
   }
  }
 };
