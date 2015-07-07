@@ -1,6 +1,6 @@
 "use strict";
 
-var EventDispatcher = require("@zayesh/eventdispatcher");
+var EventTarget = require("@zayesh/eventtarget");
 
 /**
  * Overtime.
@@ -17,7 +17,7 @@ function Overtime(options)
 {
  var self = this, o;
 
- EventDispatcher.call(this);
+ EventTarget.call(this);
 
  this.TWO_PI = Math.PI * 2.0;
  this.HALF_PI = Math.PI * 0.5;
@@ -78,7 +78,7 @@ function Overtime(options)
  this._update = function() { self.update(); };
 }
 
-Overtime.prototype = Object.create(EventDispatcher.prototype);
+Overtime.prototype = Object.create(EventTarget.prototype);
 Overtime.prototype.constructor = Overtime;
 
 /**

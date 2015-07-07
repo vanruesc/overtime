@@ -1,5 +1,5 @@
 /**
- * overtime build 30.06.2015
+ * overtime build 07.07.2015
  *
  * Copyright 2015 Raoul van Rueschen
  * 
@@ -26,7 +26,7 @@
  * @constructor
  */
 
-function EventDispatcher()
+function EventTarget()
 {
  this._listeners = {};
 }
@@ -38,7 +38,7 @@ function EventDispatcher()
  * @param {function} listener - The event listener.
  */
 
-EventDispatcher.prototype.addEventListener = function(type, listener)
+EventTarget.prototype.addEventListener = function(type, listener)
 {
  var listeners = this._listeners;
 
@@ -60,7 +60,7 @@ EventDispatcher.prototype.addEventListener = function(type, listener)
  * @param {function} listener - The event listener.
  */
 
-EventDispatcher.prototype.hasEventListener = function(type, listener)
+EventTarget.prototype.hasEventListener = function(type, listener)
 {
  var listeners = this._listeners;
  return(listeners[type] !== undefined && listeners[type].indexOf(listener) !== -1);
@@ -73,7 +73,7 @@ EventDispatcher.prototype.hasEventListener = function(type, listener)
  * @param {function} listener - The event listener.
  */
 
-EventDispatcher.prototype.removeEventListener = function(type, listener)
+EventTarget.prototype.removeEventListener = function(type, listener)
 {
  var listeners = this._listeners,
   listenerArray = listeners[type],
@@ -96,7 +96,7 @@ EventDispatcher.prototype.removeEventListener = function(type, listener)
  * @param {Event} event - The event.
  */
 
-EventDispatcher.prototype.dispatchEvent = function(event)
+EventTarget.prototype.dispatchEvent = function(event)
 {
  var listeners = this._listeners,
   listenerArray = listeners[event.type],
@@ -120,12 +120,12 @@ EventDispatcher.prototype.dispatchEvent = function(event)
  }
 };
 
-module.exports = EventDispatcher;
+module.exports = EventTarget;
 
 },{}],2:[function(require,module,exports){
 "use strict";
 
-var EventDispatcher = require("@zayesh/eventdispatcher");
+var EventTarget = require("@zayesh/eventtarget");
 
 /**
  * Overtime.
@@ -142,7 +142,7 @@ function Overtime(options)
 {
  var self = this, o;
 
- EventDispatcher.call(this);
+ EventTarget.call(this);
 
  this.TWO_PI = Math.PI * 2.0;
  this.HALF_PI = Math.PI * 0.5;
@@ -203,7 +203,7 @@ function Overtime(options)
  this._update = function() { self.update(); };
 }
 
-Overtime.prototype = Object.create(EventDispatcher.prototype);
+Overtime.prototype = Object.create(EventTarget.prototype);
 Overtime.prototype.constructor = Overtime;
 
 /**
@@ -478,5 +478,5 @@ Overtime.TimeMeasure = Object.freeze({
 
 module.exports = Overtime;
 
-},{"@zayesh/eventdispatcher":1}]},{},[2])(2)
+},{"@zayesh/eventtarget":1}]},{},[2])(2)
 });
