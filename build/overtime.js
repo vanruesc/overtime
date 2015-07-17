@@ -1,5 +1,5 @@
 /**
- * overtime v0.0.3 build 17.07.2015
+ * overtime v0.0.5 build 17.07.2015
  * https://github.com/vanruesc/overtime
  * Copyright 2015 Raoul van Rueschen, Zlib
  */
@@ -225,7 +225,7 @@ Object.defineProperty(Overtime.prototype, "time", {
  get: function() { return this.t; },
  set: function(t)
  {
-  if(t > 0)
+  if(t >= 0)
   {
    this.stop();
    this.t = t * this.tm;
