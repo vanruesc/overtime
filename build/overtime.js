@@ -1,5 +1,5 @@
 /**
- * overtime v0.0.5 build 17.07.2015
+ * overtime v0.0.5 build 18.07.2015
  * https://github.com/vanruesc/overtime
  * Copyright 2015 Raoul van Rueschen, Zlib
  */
@@ -335,6 +335,7 @@ Overtime.prototype._update = function()
 
  // Update the time.
  this.t -= elapsed;
+ if(this.t < 0) { this.t = 0; }
  this.updateEvent.time = this.t;
  this.dispatchEvent(this.updateEvent);
 
