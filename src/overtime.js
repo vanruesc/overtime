@@ -124,7 +124,7 @@ Object.defineProperty(Overtime.prototype, "time", {
  get: function() { return this.t; },
  set: function(t)
  {
-  if(t > 0)
+  if(t >= 0)
   {
    this.stop();
    this.t = t * this.tm;

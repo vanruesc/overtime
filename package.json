@@ -2,7 +2,7 @@
   "name": "overtime",
   "description": "Overtime is a stopwatch library that visualises time limits in 2D.",
   "keywords": ["time limit", "stopwatch", "canvas", "visualisation"],
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/vanruesc/overtime",
   "author": {
     "name": "Raoul van Rueschen",
