@@ -1,5 +1,5 @@
 /**
- * overtime v0.0.3 build 16.07.2015
+ * overtime v0.0.3 build 17.07.2015
  * https://github.com/vanruesc/overtime
  * Copyright 2015 Raoul van Rueschen, Zlib
  */
@@ -109,7 +109,9 @@ var EventDispatcher = require("@zayesh/eventdispatcher");
  *
  * @constructor
  * @param {Object} options - The settings.
- * @param {number} options.time - The time limit.
+ * @param {number} [options.time] - The time limit.
+ * @param {number} [options.canvas] - The canvas to use. A new one will be created if none is supplied.
+ * @param {boolean} [options.clearCanvas] - Whether the canvas should be cleared before rendering. Default is true.
  * @param {Array} [options.size] - The size of the canvas as an array: [width, height].
  * @param {Overtime.TimeMeasure} [options.timeMeasure] - The time measure of the supplied time limit. Defaults to seconds.
  */
@@ -122,34 +124,36 @@ function Overtime(options)
 
  this.TWO_PI = Math.PI * 2.0;
  this.HALF_PI = Math.PI * 0.5;
+
+ this.clear = true;
  this.animId = 0;
  this.now = Date.now();
  this.then = this.now;
  this.ctx = null;
+ this.canvas = document.createElement("canvas");
+
  this.startAngle = -this.HALF_PI;
  this.threshold = 0.023; // Chrome hack.
  this.fullCircle = this.startAngle + this.TWO_PI;
  this.primaryStrokeStyle = "rgba(255, 100, 0, 0.9)";
  this.secondaryStrokeStyle = "rgba(0, 0, 0, 0.1)";
- this.updateEvent = {type: "update"};
+ this.updateEvent = {type: "update", time: 0};
 
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
  this.t = 1;
-
- this.canvas = document.createElement("canvas");
- this.canvas.id = "overtime";
 
  if(options !== undefined)
  {
   if(options.timeMeasure > 0) { this.tm = options.timeMeasure; }
   if(options.time > 0) { this.t = options.time; }
+  if(options.canvas !== undefined) { this.canvas = options.canvas; }
   this.size = options.size;
  }
 
  this.t *= this.tm;
  this.T = this.t;
 
- // Try to overwrite the time variables with values from a previous session.
+ // Try to recover time values from a previous session.
  if(localStorage.getItem("overtime"))
  {
   try
@@ -173,14 +177,23 @@ function Overtime(options)
  });
 
  /**
-  * The internal animation loop.
+  * Bind the correct context to the internal update function.
   */
 
- this._update = function() { self.update(); };
+ this.update = function() { self._update(); };
 }
 
 Overtime.prototype = Object.create(EventDispatcher.prototype);
 Overtime.prototype.constructor = Overtime;
+
+/**
+ * Getter for the internal canvas.
+ */
+
+Object.defineProperty(Overtime.prototype, "clearCanvas", {
+ get: function() { return this.clear; },
+ set: function(c) { this.clear = c; }
+});
 
 /**
  * Getter and Setter for the internal canvas.
@@ -217,7 +230,7 @@ Object.defineProperty(Overtime.prototype, "time", {
    this.stop();
    this.t = t * this.tm;
    this.T = this.t;
-   this.render();
+   this._render();
   }
  }
 });
@@ -261,7 +274,7 @@ Object.defineProperty(Overtime.prototype, "size", {
    this.ctx.canvas.width = s[0];
    this.ctx.canvas.height = s[1];
    this.ctx.lineWidth = (s[0] < s[1]) ? s[0] * 0.05 : s[1] * 0.05;
-   this.render();
+   this._render();
   }
  }
 });
@@ -270,7 +283,7 @@ Object.defineProperty(Overtime.prototype, "size", {
  * Renders the time progress on the canvas.
  */
 
-Overtime.prototype.render = function()
+Overtime.prototype._render = function()
 {
  var ctx = this.ctx,
   w = ctx.canvas.width,
@@ -280,7 +293,7 @@ Overtime.prototype.render = function()
   endAngle,
   tooThin; // Chrome hack.
 
- ctx.clearRect(0, 0, w, h);
+ if(this.clear) { ctx.clearRect(0, 0, w, h); }
 
  // Don't bleed over the edge.
  radius -= ctx.lineWidth;
@@ -311,7 +324,7 @@ Overtime.prototype.render = function()
  * This is the main loop.
  */
 
-Overtime.prototype.update = function()
+Overtime.prototype._update = function()
 {
  var elapsed;
 
@@ -322,15 +335,16 @@ Overtime.prototype.update = function()
 
  // Update the time.
  this.t -= elapsed;
+ this.updateEvent.time = this.t;
  this.dispatchEvent(this.updateEvent);
 
- // Render the current state.
- this.render();
+ // Render the time.
+ this._render();
 
  // Continue or exit.
  if(this.t > 0)
  {
-  this.animId = requestAnimationFrame(this._update);
+  this.animId = requestAnimationFrame(this.update);
  }
  else
  {
@@ -372,7 +386,7 @@ Overtime.prototype.rewind = function()
 {
  this.stop();
  this.t = this.T;
- this.render();
+ this._render();
 };
 
 /**
@@ -389,7 +403,7 @@ Overtime.prototype.rewindBy = function(t)
   this.stop();
   this.t += t * this.tm;
   if(this.t > this.T) { this.t = this.T; }
-  this.render();
+  this._render();
  }
 };
 
@@ -423,7 +437,7 @@ Overtime.prototype.prolongBy = function(t)
   this.t += t;
   this.T += t;
   if(this.T <= 0) { this.T = this.t = 1; }
-  this.render();
+  this._render();
  }
 };
 
