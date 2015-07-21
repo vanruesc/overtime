@@ -1,5 +1,5 @@
 /**
- * overtime v0.0.5 build 18.07.2015
+ * overtime v0.0.7 build 21.07.2015
  * https://github.com/vanruesc/overtime
  * Copyright 2015 Raoul van Rueschen, Zlib
  */
@@ -399,7 +399,7 @@ Overtime.prototype.rewind = function()
 
 Overtime.prototype.rewindBy = function(t)
 {
- if(typeof t === "number" && !isNaN(t))
+ if(typeof t === "number" && !isNaN(t) && t !== 0)
  {
   this.stop();
   this.t += t * this.tm;
@@ -430,14 +430,13 @@ Overtime.prototype.advanceBy = function(t)
 
 Overtime.prototype.prolongBy = function(t)
 {
- if(typeof t === "number" && !isNaN(t))
+ if(typeof t === "number" && !isNaN(t) && t !== 0)
  {
   this.stop();
   t *= this.tm;
-  this.stop();
   this.t += t;
   this.T += t;
-  if(this.T <= 0) { this.T = this.t = 1; }
+  if(this.T < 0) { this.T = this.t = 0; }
   this._render();
  }
 };
