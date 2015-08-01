@@ -72,8 +72,10 @@ document.addEventListener("DOMContentLoaded", function init()
 ```
 
 ## Example
-
 To see how Overtime works, you may want to take a look at the [demo](https://vanruesc.github.io/overtime/demo).
+
+## Documentation
+[API](http://vanruesc.github.io/overtime/docs)
 
 ## Contributing
 Maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code.

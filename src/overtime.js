@@ -1,16 +1,20 @@
 "use strict";
 
+module.exports = Overtime;
+
 var EventDispatcher = require("@zayesh/eventdispatcher");
 
 /**
- * Overtime.
  * A time limit visualization library.
  *
+ * @class Overtime
  * @constructor
- * @param {Object} options - The settings.
- * @param {number} options.time - The time limit.
- * @param {Array} [options.size] - The size of the canvas as an array: [width, height].
- * @param {Overtime.TimeMeasure} [options.timeMeasure] - The time measure of the supplied time limit. Defaults to seconds.
+ * @param {Object} [options] - The settings.
+ * @param {Number} [options.time] - The time limit.
+ * @param {Number} [options.canvas] - The canvas to use. A new one will be created if none is supplied.
+ * @param {Boolean} [options.clearCanvas=true] - Whether the canvas should be cleared before rendering.
+ * @param {Array} [options.size] - The size of the canvas.
+ * @param {Overtime.TimeMeasure} [options.timeMeasure=Overtime.TimeMeasure.SECONDS] - The time measure of the supplied time limit.
  */
 
 function Overtime(options)
@@ -19,36 +23,182 @@ function Overtime(options)
 
  EventDispatcher.call(this);
 
+ /**
+  * PI * 2.
+  *
+  * @property TWO_PI
+  * @type Number
+  * @private
+  * @final
+  */
+
  this.TWO_PI = Math.PI * 2.0;
+
+ /**
+  * PI / 2.
+  *
+  * @property HALF_PI
+  * @type Number
+  * @private
+  * @final
+  */
+
  this.HALF_PI = Math.PI * 0.5;
+
+ /**
+  * Clear canvas flag.
+  *
+  * @property clearCanvas
+  * @type Boolean
+  */
+
+ this.clearCanvas = true;
+
+ /**
+  * Animation id of the currently requested frame.
+  *
+  * @property animId
+  * @type Number
+  * @private
+  */
+
  this.animId = 0;
+
+ /**
+  * Used for time-based rendering.
+  *
+  * @property now
+  * @type Number
+  * @private
+  */
+
  this.now = Date.now();
+
+ /**
+  * Used for time-based rendering.
+  *
+  * @property then
+  * @type Number
+  * @private
+  */
+
  this.then = this.now;
+
+ /**
+  * The rendering context.
+  *
+  * @property ctx
+  * @type CanvasRenderingContext2D
+  * @private
+  */
+
  this.ctx = null;
+
+ // Set the initial canvas.
+ this.canvas = document.createElement("canvas");
+
+ /**
+  * the start angle.
+  *
+  * @property startAngle
+  * @type Number
+  * @private
+  */
+
  this.startAngle = -this.HALF_PI;
- this.threshold = 0.023; // Chrome hack.
+
+ /**
+  * A float threshold for the chrome rendering hack.
+  *
+  * @property threshold
+  * @type Number
+  * @private
+  */
+
+ this.threshold = 0.023;
+
+ /**
+  * Radians of the full circle plus the start angle.
+  *
+  * @property fullCircle
+  * @type Number
+  * @private
+  */
+
  this.fullCircle = this.startAngle + this.TWO_PI;
+
+ /**
+  * Colour of the progressing circle.
+  *
+  * @property primaryStrokeStyle
+  * @type String
+  * @default rgba(255, 100, 0, 0.9)
+  */
+
  this.primaryStrokeStyle = "rgba(255, 100, 0, 0.9)";
+
+ /**
+  * Colour of the empty circle.
+  *
+  * @property secondaryStrokeStyle
+  * @type String
+  * @default rgba(0, 0, 0, 0.1)
+  */
+
  this.secondaryStrokeStyle = "rgba(0, 0, 0, 0.1)";
- this.updateEvent = {type: "update"};
+
+ /**
+  * Returns the remaining time.
+  *
+  * @event update
+  * @param {Number} time - The remaining time.
+  */
+
+ this.updateEvent = {type: "update", time: 0};
+
+ /**
+  * The currently set time measure.
+  *
+  * @property tm
+  * @type Overtime.TimeMeasure
+  * @private
+  */
 
  this.tm = Overtime.TimeMeasure.MILLISECONDS;
+
+ /**
+  * The remaining time in milliseconds.
+  *
+  * @property t
+  * @type Number
+  * @private
+  */
+
  this.t = 1;
 
- this.canvas = document.createElement("canvas");
- this.canvas.id = "overtime";
-
+ // Overwrite the defaults.
  if(options !== undefined)
  {
   if(options.timeMeasure > 0) { this.tm = options.timeMeasure; }
   if(options.time > 0) { this.t = options.time; }
+  if(options.canvas !== undefined) { this.canvas = options.canvas; }
   this.size = options.size;
  }
 
+ // Update the time.
  this.t *= this.tm;
+
+ /**
+  * The total time.
+  *
+  * @property T
+  * @type Number
+  * @private
+  */
+
  this.T = this.t;
 
- // Try to overwrite the time variables with values from a previous session.
+ // Try to recover time values from a previous session.
  if(localStorage.getItem("overtime"))
  {
   try
@@ -61,8 +211,14 @@ function Overtime(options)
   catch(e) { /* Swallow. */ }
  }
 
- // Store the time values for the next session.
- window.addEventListener("unload", function()
+ /**
+  * Stores the time values for the next session.
+  *
+  * @method persist
+  * @private
+  */
+
+ window.addEventListener("unload", function persist()
  {
   localStorage.setItem("overtime", JSON.stringify({
    tm: self.tm,
@@ -72,19 +228,22 @@ function Overtime(options)
  });
 
  /**
-  * The internal animation loop.
+  * The update function.
+  *
+  * @method update
   */
 
- this._update = function() { self.update(); };
+ this.update = function() { self._update(); };
 }
 
 Overtime.prototype = Object.create(EventDispatcher.prototype);
 Overtime.prototype.constructor = Overtime;
 
 /**
- * Getter and Setter for the internal canvas.
- * 
- * @param {canvas} c - The new canvas to draw on.
+ * The internal canvas.
+ *
+ * @property canvas
+ * @type HTMLCanvasElement
  */
 
 Object.defineProperty(Overtime.prototype, "canvas", {
@@ -102,30 +261,32 @@ Object.defineProperty(Overtime.prototype, "canvas", {
 });
 
 /**
- * Getter and Setter for the time.
- * 
- * @param {number} t - The new time. Will be translated to the current time measure.
+ * The time. When set, the given value will be translated to the current time measure.
+ *
+ * @property time
+ * @type Number
  */
 
 Object.defineProperty(Overtime.prototype, "time", {
  get: function() { return this.t; },
  set: function(t)
  {
-  if(t > 0)
+  if(t >= 0)
   {
    this.stop();
    this.t = t * this.tm;
    this.T = this.t;
-   this.render();
+   this._render();
   }
  }
 });
 
 /**
- * Getter and Setter for the time measure.
+ * The current time measure.
  * The current time will not be affected by this in any way.
- * 
- * @param {Overtime.TimeMeasure} tm - The new time measure.
+ *
+ * @property timeMeasure
+ * @type Overtime.TimeMeasure
  */
 
 Object.defineProperty(Overtime.prototype, "timeMeasure", {
@@ -140,9 +301,12 @@ Object.defineProperty(Overtime.prototype, "timeMeasure", {
 });
 
 /**
- * Getter and Setter for the size of the internal canvas.
- * 
- * @param {Array} s - The new size in the form of [width, height].
+ * The size of the canvas.
+ *
+ * @property size
+ * @type Number
+ * @example
+ *  [width, height]
  */
 
 Object.defineProperty(Overtime.prototype, "size", {
@@ -160,16 +324,19 @@ Object.defineProperty(Overtime.prototype, "size", {
    this.ctx.canvas.width = s[0];
    this.ctx.canvas.height = s[1];
    this.ctx.lineWidth = (s[0] < s[1]) ? s[0] * 0.05 : s[1] * 0.05;
-   this.render();
+   this._render();
   }
  }
 });
 
 /**
  * Renders the time progress on the canvas.
+ *
+ * @method _render
+ * @private
  */
 
-Overtime.prototype.render = function()
+Overtime.prototype._render = function()
 {
  var ctx = this.ctx,
   w = ctx.canvas.width,
@@ -179,7 +346,7 @@ Overtime.prototype.render = function()
   endAngle,
   tooThin; // Chrome hack.
 
- ctx.clearRect(0, 0, w, h);
+ if(this.clearCanvas) { ctx.clearRect(0, 0, w, h); }
 
  // Don't bleed over the edge.
  radius -= ctx.lineWidth;
@@ -208,9 +375,12 @@ Overtime.prototype.render = function()
 /**
  * Steps the system forward.
  * This is the main loop.
+ *
+ * @method _update
+ * @private
  */
 
-Overtime.prototype.update = function()
+Overtime.prototype._update = function()
 {
  var elapsed;
 
@@ -221,15 +391,17 @@ Overtime.prototype.update = function()
 
  // Update the time.
  this.t -= elapsed;
+ if(this.t < 0) { this.t = 0; }
+ this.updateEvent.time = this.t;
  this.dispatchEvent(this.updateEvent);
 
- // Render the current state.
- this.render();
+ // Render the time.
+ this._render();
 
  // Continue or exit.
  if(this.t > 0)
  {
-  this.animId = requestAnimationFrame(this._update);
+  this.animId = requestAnimationFrame(this.update);
  }
  else
  {
@@ -239,6 +411,8 @@ Overtime.prototype.update = function()
 
 /**
  * Stops the rendering cycle. Does nothing else besides that.
+ *
+ * @method stop
  */
 
 Overtime.prototype.stop = function()
@@ -253,6 +427,8 @@ Overtime.prototype.stop = function()
 /**
  * Tries to start the rendering cycle if it isn't
  * running. Otherwise it restarts it.
+ *
+ * @method start
  */
 
 Overtime.prototype.start = function()
@@ -265,37 +441,41 @@ Overtime.prototype.start = function()
 
 /**
  * Sets the time back to its original length.
+ *
+ * @method rewind
  */
 
 Overtime.prototype.rewind = function()
 {
  this.stop();
  this.t = this.T;
- this.render();
+ this._render();
 };
 
 /**
  * Sets the time back by the given value.
  * The time will not go back beyond the initial length.
  *
- * @param {number} t - The time by which to rewind. Interpreted according to the current time measure. A negative value corresponds to fast-forwarding.
+ * @method rewindBy
+ * @param {Number} t - The time by which to rewind. Interpreted according to the current time measure. A negative value corresponds to fast-forwarding.
  */
 
 Overtime.prototype.rewindBy = function(t)
 {
- if(typeof t === "number" && !isNaN(t))
+ if(typeof t === "number" && !isNaN(t) && t !== 0)
  {
   this.stop();
   this.t += t * this.tm;
   if(this.t > this.T) { this.t = this.T; }
-  this.render();
+  this._render();
  }
 };
 
 /**
  * Goes ahead in time by a given value.
  *
- * @param {number} t - The time value by which to rewind. Will be interpreted according to the current time measure. A negative value corresponds to rewinding.
+ * @method advanceBy
+ * @param {Number} t - The time value by which to rewind. Will be interpreted according to the current time measure. A negative value corresponds to rewinding.
  */
 
 Overtime.prototype.advanceBy = function(t)
@@ -309,27 +489,28 @@ Overtime.prototype.advanceBy = function(t)
 /**
  * Adds time.
  *
- * @param {number} t - The time value to add. Will be interpreted according to the current time measure. A negative value corresponds to shortening.
+ * @method prolongBy
+ * @param {Number} t - The time value to add. Will be interpreted according to the current time measure. A negative value corresponds to shortening.
  */
 
 Overtime.prototype.prolongBy = function(t)
 {
- if(typeof t === "number" && !isNaN(t))
+ if(typeof t === "number" && !isNaN(t) && t !== 0)
  {
   this.stop();
   t *= this.tm;
-  this.stop();
   this.t += t;
   this.T += t;
-  if(this.T <= 0) { this.T = this.t = 1; }
-  this.render();
+  if(this.T < 0) { this.T = this.t = 0; }
+  this._render();
  }
 };
 
 /**
  * Reduces the total duration of the countdown.
  *
- * @param {number} t - The time value to subtract. Will be interpreted according to the current time measure. A negative value corresponds to prolonging.
+ * @method shortenBy
+ * @param {Number} t - The time value to subtract. Will be interpreted according to the current time measure. A negative value corresponds to prolonging.
  */
 
 Overtime.prototype.shortenBy = function(t)
@@ -341,7 +522,12 @@ Overtime.prototype.shortenBy = function(t)
 };
 
 /**
- * Static enumeration of time measure constants.
+ * Enumeration of time measure constants.
+ *
+ * @property TimeMeasure
+ * @type Object
+ * @static
+ * @final
  */
 
 Overtime.TimeMeasure = Object.freeze({
@@ -350,5 +536,3 @@ Overtime.TimeMeasure = Object.freeze({
  MINUTES: 60000,
  HOURS: 3600000
 });
-
-module.exports = Overtime;

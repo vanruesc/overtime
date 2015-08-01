@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Overtime - overtime</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="overtime" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.8</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Overtime.html">Overtime</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>Overtime Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/src_overtime.js.html#l7"><code>src\overtime.js:7</code></a>
+        </div>
+
+
+</div>
+
+
+<div class="box intro">
+    <p>A time limit visualization library.</p>
+
+</div>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+<div id="method_Overtime" class="method item">
+    <h3 class="name"><code>Overtime</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code class="optional">[options]</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l7"><code>src\overtime.js:7</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name optional">[options]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+
+
+                    <div class="param-description">
+                        <ul>
+<li>The settings.</li>
+</ul>
+
+                    </div>
+
+                        <ul class="params-list">
+                            <li class="param">
+                                    <code class="param-name optional">[time]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+
+                                <div class="param-description">
+                                    <ul>
+<li>The time limit.</li>
+</ul>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name optional">[canvas]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+
+                                <div class="param-description">
+                                    <ul>
+<li>The canvas to use. A new one will be created if none is supplied.</li>
+</ul>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name optional">[clearCanvas=true]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+
+                                <div class="param-description">
+                                    <ul>
+<li>Whether the canvas should be cleared before rendering.</li>
+</ul>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name optional">[size]</code>
+                                    <span class="type">Array</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+
+                                <div class="param-description">
+                                    <ul>
+<li>The size of the canvas.</li>
+</ul>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name optional">[timeMeasure=Overtime.TimeMeasure.SECONDS]</code>
+                                    <span class="type">Overtime.TimeMeasure</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+
+                                <div class="param-description">
+                                    <ul>
+<li>The time measure of the supplied time limit.</li>
+</ul>
+
+                                </div>
+
+                            </li>
+                        </ul>
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+    </div>
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method private">
+                                <a href="#method__render">_render</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__update">_update</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_advanceBy">advanceBy</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method_persist">persist</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_prolongBy">prolongBy</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_rewind">rewind</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_rewindBy">rewindBy</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_shortenBy">shortenBy</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_start">start</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_stop">stop</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_update">update</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                            <li class="index-item property private">
+                                <a href="#property_animId">animId</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_canvas">canvas</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_clearCanvas">clearCanvas</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_ctx">ctx</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_fullCircle">fullCircle</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_HALF_PI">HALF_PI</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_now">now</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_primaryStrokeStyle">primaryStrokeStyle</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_secondaryStrokeStyle">secondaryStrokeStyle</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_size">size</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_startAngle">startAngle</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_t">t</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_T">T</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_then">then</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_threshold">threshold</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_time">time</a>
+
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_TimeMeasure">TimeMeasure</a>
+
+                                    <span class="flag static">static</span>
+                            </li>
+                            <li class="index-item property">
+                                <a href="#property_timeMeasure">timeMeasure</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_tm">tm</a>
+
+                            </li>
+                            <li class="index-item property private">
+                                <a href="#property_TWO_PI">TWO_PI</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events">
+                            <li class="index-item event">
+                                <a href="#event_update">update</a>
+
+                            </li>
+                    </ul>
+                </div>
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method__render" class="method item private">
+    <h3 class="name"><code>_render</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l332"><code>src\overtime.js:332</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Renders the time progress on the canvas.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method__update" class="method item private">
+    <h3 class="name"><code>_update</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l375"><code>src\overtime.js:375</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Steps the system forward.
+This is the main loop.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_advanceBy" class="method item">
+    <h3 class="name"><code>advanceBy</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>t</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l474"><code>src\overtime.js:474</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Goes ahead in time by a given value.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">t</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <ul>
+<li>The time value by which to rewind. Will be interpreted according to the current time measure. A negative value corresponds to rewinding.</li>
+</ul>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_persist" class="method item private">
+    <h3 class="name"><code>persist</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l214"><code>src\overtime.js:214</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Stores the time values for the next session.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_prolongBy" class="method item">
+    <h3 class="name"><code>prolongBy</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>t</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l489"><code>src\overtime.js:489</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Adds time.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">t</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <ul>
+<li>The time value to add. Will be interpreted according to the current time measure. A negative value corresponds to shortening.</li>
+</ul>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_rewind" class="method item">
+    <h3 class="name"><code>rewind</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l442"><code>src\overtime.js:442</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Sets the time back to its original length.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_rewindBy" class="method item">
+    <h3 class="name"><code>rewindBy</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>t</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l455"><code>src\overtime.js:455</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Sets the time back by the given value.
+The time will not go back beyond the initial length.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">t</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <ul>
+<li>The time by which to rewind. Interpreted according to the current time measure. A negative value corresponds to fast-forwarding.</li>
+</ul>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_shortenBy" class="method item">
+    <h3 class="name"><code>shortenBy</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>t</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l509"><code>src\overtime.js:509</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Reduces the total duration of the countdown.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">t</code>
+                        <span class="type">Number</span>
+
+
+                    <div class="param-description">
+                        <ul>
+<li>The time value to subtract. Will be interpreted according to the current time measure. A negative value corresponds to prolonging.</li>
+</ul>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_start" class="method item">
+    <h3 class="name"><code>start</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l427"><code>src\overtime.js:427</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Tries to start the rendering cycle if it isn't
+running. Otherwise it restarts it.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_stop" class="method item">
+    <h3 class="name"><code>stop</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l412"><code>src\overtime.js:412</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Stops the rendering cycle. Does nothing else besides that.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_update" class="method item">
+    <h3 class="name"><code>update</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/src_overtime.js.html#l230"><code>src\overtime.js:230</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>The update function.</p>
+
+    </div>
+
+
+
+
+</div>
+            </div>
+
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                    <div id="property_animId" class="property item private">
+                        <h3 class="name"><code>animId</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l57"><code>src\overtime.js:57</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Animation id of the currently requested frame.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_canvas" class="property item">
+                        <h3 class="name"><code>canvas</code></h3>
+                        <span class="type">HTMLCanvasElement</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l242"><code>src\overtime.js:242</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The internal canvas.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_clearCanvas" class="property item">
+                        <h3 class="name"><code>clearCanvas</code></h3>
+                        <span class="type">Boolean</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l48"><code>src\overtime.js:48</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Clear canvas flag.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_ctx" class="property item private">
+                        <h3 class="name"><code>ctx</code></h3>
+                        <span class="type">CanvasRenderingContext2D</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l87"><code>src\overtime.js:87</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The rendering context.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_fullCircle" class="property item private">
+                        <h3 class="name"><code>fullCircle</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l120"><code>src\overtime.js:120</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Radians of the full circle plus the start angle.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_HALF_PI" class="property item private">
+                        <h3 class="name"><code>HALF_PI</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                            <span class="flag final">final</span>
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l37"><code>src\overtime.js:37</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>PI / 2.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_now" class="property item private">
+                        <h3 class="name"><code>now</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l67"><code>src\overtime.js:67</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Used for time-based rendering.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_primaryStrokeStyle" class="property item">
+                        <h3 class="name"><code>primaryStrokeStyle</code></h3>
+                        <span class="type">String</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l130"><code>src\overtime.js:130</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Colour of the progressing circle.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> rgba(255, 100, 0, 0.9)</p>
+                    
+                    
+                    </div>
+                    <div id="property_secondaryStrokeStyle" class="property item">
+                        <h3 class="name"><code>secondaryStrokeStyle</code></h3>
+                        <span class="type">String</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l140"><code>src\overtime.js:140</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Colour of the empty circle.</p>
+                    
+                        </div>
+                    
+                            <p><strong>Default:</strong> rgba(0, 0, 0, 0.1)</p>
+                    
+                    
+                    </div>
+                    <div id="property_size" class="property item">
+                        <h3 class="name"><code>size</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l303"><code>src\overtime.js:303</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The size of the canvas.</p>
+                    
+                        </div>
+                    
+                    
+                            <div class="example">
+                                <h4>Example:</h4>
+                    
+                                <div class="example-content">
+                                    <p>[width, height]</p>
+                    
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div id="property_startAngle" class="property item private">
+                        <h3 class="name"><code>startAngle</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l100"><code>src\overtime.js:100</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>the start angle.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_t" class="property item private">
+                        <h3 class="name"><code>t</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l169"><code>src\overtime.js:169</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The remaining time in milliseconds.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_T" class="property item private">
+                        <h3 class="name"><code>T</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l191"><code>src\overtime.js:191</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The total time.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_then" class="property item private">
+                        <h3 class="name"><code>then</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l77"><code>src\overtime.js:77</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Used for time-based rendering.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_threshold" class="property item private">
+                        <h3 class="name"><code>threshold</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l110"><code>src\overtime.js:110</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>A float threshold for the chrome rendering hack.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_time" class="property item">
+                        <h3 class="name"><code>time</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l263"><code>src\overtime.js:263</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The time. When set, the given value will be translated to the current time measure.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_TimeMeasure" class="property item">
+                        <h3 class="name"><code>TimeMeasure</code></h3>
+                        <span class="type">Object</span>
+                    
+                    
+                    
+                            <span class="flag final">final</span>
+                    
+                            <span class="flag static">static</span>
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l524"><code>src\overtime.js:524</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Enumeration of time measure constants.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_timeMeasure" class="property item">
+                        <h3 class="name"><code>timeMeasure</code></h3>
+                        <span class="type">Overtime.TimeMeasure</span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l284"><code>src\overtime.js:284</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The current time measure.
+                    The current time will not be affected by this in any way.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_tm" class="property item private">
+                        <h3 class="name"><code>tm</code></h3>
+                        <span class="type">Overtime.TimeMeasure</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l159"><code>src\overtime.js:159</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>The currently set time measure.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="property_TWO_PI" class="property item private">
+                        <h3 class="name"><code>TWO_PI</code></h3>
+                        <span class="type">Number</span>
+                    
+                    
+                            <span class="flag private">private</span>
+                    
+                            <span class="flag final">final</span>
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l26"><code>src\overtime.js:26</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>PI * 2.</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+
+
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                    <div id="event_update" class="events item">
+                        <h3 class="name"><code>update</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/src_overtime.js.html#l150"><code>src\overtime.js:150</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>Returns the remaining time.</p>
+                    
+                        </div>
+                    
+                            <div class="params">
+                                <h4>Event Payload:</h4>
+                    
+                                <ul class="params-list">
+                                    <li class="param">
+                                            <code class="param-name">time</code>
+                                            <span class="type">Number</span>
+                    
+                    
+                                        <div class="param-description">
+                                            <ul>
+                    <li>The remaining time.</li>
+                    </ul>
+                    
+                                        </div>
+                    
+                                    </li>
+                                </ul>
+                            </div>
+                    
+                    
+                    </div>
+            </div>
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
