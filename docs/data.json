@@ -1,0 +1,430 @@
+{
+    "project": {
+        "name": "overtime",
+        "description": "Overtime is a stopwatch library that visualises time limits in 2D.",
+        "version": "0.0.8",
+        "url": "https://github.com/vanruesc/overtime"
+    },
+    "files": {
+        "src\\overtime.js": {
+            "name": "src\\overtime.js",
+            "modules": {},
+            "classes": {
+                "Overtime": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Overtime": {
+            "name": "Overtime",
+            "shortname": "Overtime",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src\\overtime.js",
+            "line": 7,
+            "description": "A time limit visualization library.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "- The settings.",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "time",
+                            "description": "- The time limit.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "canvas",
+                            "description": "- The canvas to use. A new one will be created if none is supplied.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "clearCanvas",
+                            "description": "- Whether the canvas should be cleared before rendering.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        },
+                        {
+                            "name": "size",
+                            "description": "- The size of the canvas.",
+                            "type": "Array",
+                            "optional": true
+                        },
+                        {
+                            "name": "timeMeasure",
+                            "description": "- The time measure of the supplied time limit.",
+                            "type": "Overtime.TimeMeasure",
+                            "optional": true,
+                            "optdefault": "Overtime.TimeMeasure.SECONDS"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "src\\overtime.js",
+            "line": 26,
+            "description": "PI * 2.",
+            "itemtype": "property",
+            "name": "TWO_PI",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 37,
+            "description": "PI / 2.",
+            "itemtype": "property",
+            "name": "HALF_PI",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 48,
+            "description": "Clear canvas flag.",
+            "itemtype": "property",
+            "name": "clearCanvas",
+            "type": "Boolean",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 57,
+            "description": "Animation id of the currently requested frame.",
+            "itemtype": "property",
+            "name": "animId",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 67,
+            "description": "Used for time-based rendering.",
+            "itemtype": "property",
+            "name": "now",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 77,
+            "description": "Used for time-based rendering.",
+            "itemtype": "property",
+            "name": "then",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 87,
+            "description": "The rendering context.",
+            "itemtype": "property",
+            "name": "ctx",
+            "type": "CanvasRenderingContext2D",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 100,
+            "description": "the start angle.",
+            "itemtype": "property",
+            "name": "startAngle",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 110,
+            "description": "A float threshold for the chrome rendering hack.",
+            "itemtype": "property",
+            "name": "threshold",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 120,
+            "description": "Radians of the full circle plus the start angle.",
+            "itemtype": "property",
+            "name": "fullCircle",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 130,
+            "description": "Colour of the progressing circle.",
+            "itemtype": "property",
+            "name": "primaryStrokeStyle",
+            "type": "String",
+            "default": "rgba(255, 100, 0, 0.9)",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 140,
+            "description": "Colour of the empty circle.",
+            "itemtype": "property",
+            "name": "secondaryStrokeStyle",
+            "type": "String",
+            "default": "rgba(0, 0, 0, 0.1)",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 150,
+            "description": "Returns the remaining time.",
+            "itemtype": "event",
+            "name": "update",
+            "params": [
+                {
+                    "name": "time",
+                    "description": "- The remaining time.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 159,
+            "description": "The currently set time measure.",
+            "itemtype": "property",
+            "name": "tm",
+            "type": "Overtime.TimeMeasure",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 169,
+            "description": "The remaining time in milliseconds.",
+            "itemtype": "property",
+            "name": "t",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 191,
+            "description": "The total time.",
+            "itemtype": "property",
+            "name": "T",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 214,
+            "description": "Stores the time values for the next session.",
+            "itemtype": "method",
+            "name": "persist",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 230,
+            "description": "The update function.",
+            "itemtype": "method",
+            "name": "update",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 242,
+            "description": "The internal canvas.",
+            "itemtype": "property",
+            "name": "canvas",
+            "type": "HTMLCanvasElement",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 263,
+            "description": "The time. When set, the given value will be translated to the current time measure.",
+            "itemtype": "property",
+            "name": "time",
+            "type": "Number",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 284,
+            "description": "The current time measure.\nThe current time will not be affected by this in any way.",
+            "itemtype": "property",
+            "name": "timeMeasure",
+            "type": "Overtime.TimeMeasure",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 303,
+            "description": "The size of the canvas.",
+            "itemtype": "property",
+            "name": "size",
+            "type": "Number",
+            "example": [
+                "\n [width, height]"
+            ],
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 332,
+            "description": "Renders the time progress on the canvas.",
+            "itemtype": "method",
+            "name": "_render",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 375,
+            "description": "Steps the system forward.\nThis is the main loop.",
+            "itemtype": "method",
+            "name": "_update",
+            "access": "private",
+            "tagname": "",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 412,
+            "description": "Stops the rendering cycle. Does nothing else besides that.",
+            "itemtype": "method",
+            "name": "stop",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 427,
+            "description": "Tries to start the rendering cycle if it isn't\nrunning. Otherwise it restarts it.",
+            "itemtype": "method",
+            "name": "start",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 442,
+            "description": "Sets the time back to its original length.",
+            "itemtype": "method",
+            "name": "rewind",
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 455,
+            "description": "Sets the time back by the given value.\nThe time will not go back beyond the initial length.",
+            "itemtype": "method",
+            "name": "rewindBy",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "- The time by which to rewind. Interpreted according to the current time measure. A negative value corresponds to fast-forwarding.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 474,
+            "description": "Goes ahead in time by a given value.",
+            "itemtype": "method",
+            "name": "advanceBy",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "- The time value by which to rewind. Will be interpreted according to the current time measure. A negative value corresponds to rewinding.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 489,
+            "description": "Adds time.",
+            "itemtype": "method",
+            "name": "prolongBy",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "- The time value to add. Will be interpreted according to the current time measure. A negative value corresponds to shortening.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 509,
+            "description": "Reduces the total duration of the countdown.",
+            "itemtype": "method",
+            "name": "shortenBy",
+            "params": [
+                {
+                    "name": "t",
+                    "description": "- The time value to subtract. Will be interpreted according to the current time measure. A negative value corresponds to prolonging.",
+                    "type": "Number"
+                }
+            ],
+            "class": "Overtime"
+        },
+        {
+            "file": "src\\overtime.js",
+            "line": 524,
+            "description": "Enumeration of time measure constants.",
+            "itemtype": "property",
+            "name": "TimeMeasure",
+            "type": "Object",
+            "static": 1,
+            "final": 1,
+            "class": "Overtime"
+        }
+    ],
+    "warnings": []
+}
