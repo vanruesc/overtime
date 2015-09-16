@@ -23,14 +23,13 @@ $ npm install overtime
 ## Usage
 
 ```javascript
-// Note: using require is not necessary with the browser bundle.
-var Overtime = require("overtime");
+import Overtime from "overtime";
 
 // Create an Overtime instance.
 var overtime = new Overtime({
- time: 5,
- timeMeasure: Overtime.TimeMeasure.MINUTES,
- size: [300, 300]
+	time: 5,
+	timeMeasure: Overtime.TimeMeasure.MINUTES,
+	size: [300, 300]
 });
 
 /*
@@ -43,36 +42,38 @@ var overtime = new Overtime({
  * "load"-event of the window object instead.
  */
 
-document.addEventListener("DOMContentLoaded", function init()
-{
- // Grab the output canvas and put it on the page.
- document.getElementById("myContainer").appendChild(overtime.canvas);
+document.addEventListener("DOMContentLoaded", function init() {
 
- // Do something when the time elapsed.
- overtime.addEventListener("elapsed", function()
- {
-  console.log("Time's up!");
- });
+	// Grab the output canvas and put it on the page.
+	document.getElementById("myContainer").appendChild(overtime.canvas);
 
- // Control Overtime.
- overtime.stop();
- overtime.start();
- overtime.rewind();
- overtime.rewindBy(Number.MAX_VALUE);
- overtime.fastForwardBy(2);
- overtime.prolongBy(2);
- overtime.timeMeasure = Overtime.TimeMeasure.MILISECONDS;
- overtime.shortenBy(100);
- overtime.timeMeasure = Overtime.TimeMeasure.HOURS;
- overtime.time = 1;
+	// Do something when the time elapsed.
+	overtime.addEventListener("elapsed", function() {
 
- // Clean up.
- document.removeEventListener("DOMContentLoaded", init);
+		console.log("Time's up!");
+
+	});
+
+	// Control Overtime.
+	overtime.stop();
+	overtime.start();
+	overtime.rewind();
+	overtime.rewindBy(Number.MAX_VALUE);
+	overtime.fastForwardBy(2);
+	overtime.prolongBy(2);
+	overtime.timeMeasure = Overtime.TimeMeasure.MILISECONDS;
+	overtime.shortenBy(100);
+	overtime.timeMeasure = Overtime.TimeMeasure.HOURS;
+	overtime.time = 1;
+
+	// Clean up.
+	document.removeEventListener("DOMContentLoaded", init);
+
 });
 ```
 
 ## Example
-To see how Overtime works, you may want to take a look at the [demo](https://vanruesc.github.io/overtime/demo).
+Take a look at the [demo](https://vanruesc.github.io/overtime/demo) to see how Overtime works.
 
 ## Documentation
 [API](http://vanruesc.github.io/overtime/docs)

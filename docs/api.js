@@ -4,6 +4,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Overtime"
     ],
     "modules": [],
-    "allModules": []
+    "allModules": [],
+    "elements": []
 } };
 });

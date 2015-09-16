@@ -1,8 +1,8 @@
 {
     "project": {
-        "name": "overtime",
+        "name": "Overtime API",
         "description": "Overtime is a stopwatch library that visualises time limits in 2D.",
-        "version": "0.0.8",
+        "version": "0.1.0",
         "url": "https://github.com/vanruesc/overtime"
     },
     "files": {
@@ -27,7 +27,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src\\overtime.js",
-            "line": 7,
+            "line": 3,
             "description": "A time limit visualization library.",
             "is_constructor": 1,
             "params": [
@@ -74,10 +74,11 @@
             ]
         }
     },
+    "elements": {},
     "classitems": [
         {
             "file": "src\\overtime.js",
-            "line": 26,
+            "line": 22,
             "description": "PI * 2.",
             "itemtype": "property",
             "name": "TWO_PI",
@@ -89,7 +90,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 37,
+            "line": 33,
             "description": "PI / 2.",
             "itemtype": "property",
             "name": "HALF_PI",
@@ -101,7 +102,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 48,
+            "line": 44,
             "description": "Clear canvas flag.",
             "itemtype": "property",
             "name": "clearCanvas",
@@ -110,7 +111,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 57,
+            "line": 53,
             "description": "Animation id of the currently requested frame.",
             "itemtype": "property",
             "name": "animId",
@@ -121,7 +122,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 67,
+            "line": 63,
             "description": "Used for time-based rendering.",
             "itemtype": "property",
             "name": "now",
@@ -132,7 +133,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 77,
+            "line": 73,
             "description": "Used for time-based rendering.",
             "itemtype": "property",
             "name": "then",
@@ -143,7 +144,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 87,
+            "line": 83,
             "description": "The rendering context.",
             "itemtype": "property",
             "name": "ctx",
@@ -154,7 +155,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 100,
+            "line": 96,
             "description": "the start angle.",
             "itemtype": "property",
             "name": "startAngle",
@@ -165,7 +166,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 110,
+            "line": 106,
             "description": "A float threshold for the chrome rendering hack.",
             "itemtype": "property",
             "name": "threshold",
@@ -176,7 +177,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 120,
+            "line": 116,
             "description": "Radians of the full circle plus the start angle.",
             "itemtype": "property",
             "name": "fullCircle",
@@ -187,7 +188,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 130,
+            "line": 126,
             "description": "Colour of the progressing circle.",
             "itemtype": "property",
             "name": "primaryStrokeStyle",
@@ -197,7 +198,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 140,
+            "line": 136,
             "description": "Colour of the empty circle.",
             "itemtype": "property",
             "name": "secondaryStrokeStyle",
@@ -207,7 +208,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 150,
+            "line": 146,
             "description": "Returns the remaining time.",
             "itemtype": "event",
             "name": "update",
@@ -222,7 +223,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 159,
+            "line": 155,
             "description": "The currently set time measure.",
             "itemtype": "property",
             "name": "tm",
@@ -233,7 +234,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 169,
+            "line": 165,
             "description": "The remaining time in milliseconds.",
             "itemtype": "property",
             "name": "t",
@@ -244,7 +245,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 191,
+            "line": 188,
             "description": "The total time.",
             "itemtype": "property",
             "name": "T",
@@ -255,7 +256,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 214,
+            "line": 212,
             "description": "Stores the time values for the next session.",
             "itemtype": "method",
             "name": "persist",
@@ -265,7 +266,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 230,
+            "line": 229,
             "description": "The update function.",
             "itemtype": "method",
             "name": "update",
@@ -282,7 +283,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 263,
+            "line": 268,
             "description": "The time. When set, the given value will be translated to the current time measure.",
             "itemtype": "property",
             "name": "time",
@@ -291,7 +292,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 284,
+            "line": 294,
             "description": "The current time measure.\nThe current time will not be affected by this in any way.",
             "itemtype": "property",
             "name": "timeMeasure",
@@ -300,7 +301,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 303,
+            "line": 318,
             "description": "The size of the canvas.",
             "itemtype": "property",
             "name": "size",
@@ -312,7 +313,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 332,
+            "line": 353,
             "description": "Renders the time progress on the canvas.",
             "itemtype": "method",
             "name": "_render",
@@ -322,7 +323,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 375,
+            "line": 399,
             "description": "Steps the system forward.\nThis is the main loop.",
             "itemtype": "method",
             "name": "_update",
@@ -332,7 +333,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 412,
+            "line": 438,
             "description": "Stops the rendering cycle. Does nothing else besides that.",
             "itemtype": "method",
             "name": "stop",
@@ -340,7 +341,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 427,
+            "line": 455,
             "description": "Tries to start the rendering cycle if it isn't\nrunning. Otherwise it restarts it.",
             "itemtype": "method",
             "name": "start",
@@ -348,7 +349,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 442,
+            "line": 471,
             "description": "Sets the time back to its original length.",
             "itemtype": "method",
             "name": "rewind",
@@ -356,7 +357,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 455,
+            "line": 485,
             "description": "Sets the time back by the given value.\nThe time will not go back beyond the initial length.",
             "itemtype": "method",
             "name": "rewindBy",
@@ -371,7 +372,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 474,
+            "line": 506,
             "description": "Goes ahead in time by a given value.",
             "itemtype": "method",
             "name": "advanceBy",
@@ -386,7 +387,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 489,
+            "line": 523,
             "description": "Adds time.",
             "itemtype": "method",
             "name": "prolongBy",
@@ -401,7 +402,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 509,
+            "line": 545,
             "description": "Reduces the total duration of the countdown.",
             "itemtype": "method",
             "name": "shortenBy",
@@ -416,7 +417,7 @@
         },
         {
             "file": "src\\overtime.js",
-            "line": 524,
+            "line": 562,
             "description": "Enumeration of time measure constants.",
             "itemtype": "property",
             "name": "TimeMeasure",
