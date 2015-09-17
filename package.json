@@ -1,6 +1,6 @@
 {
 	"name": "overtime",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Overtime is a stopwatch library that visualises time limits in 2D.",
 	"homepage": "https://github.com/vanruesc/overtime",
 	"main": "build/overtime",
@@ -33,12 +33,12 @@
 		"jshint:test": "jshint test",
 		"jshint:lib": "jshint src",
 		"jshint": "npm run jshint:banner && npm run jshint:test && npm run jshint:lib",
-		"browserify": "mkdirp build && browserify src/overtime.js -t babelify -s Overtime -o build/overtime.js",
+		"rollup": "node build.js",
 		"uglify": "uglifyjs build/overtime.js -c -m -o build/overtime.min.js",
 		"mocha": "mocha test",
 		"yuidoc": "yuidoc src -q -c yuidoc.json",
 		"prebuild": "npm run jshint",
-		"build": "npm run browserify",
+		"build": "npm run rollup",
 		"postbuild": "npm run uglify && node banner.js",
 		"pretest": "npm run build",
 		"test": "npm run mocha"
@@ -53,14 +53,11 @@
 	},
 
 	"devDependencies": {
-		"babelify": "6.x.x",
-		"browserify": "11.x.x",
-		"mkdirp": "0.x.x",
 		"jshint": "2.x.x",
 		"mocha": "2.x.x",
 		"prepend-file": "1.x.x",
+		"rollup": "0.x.x",
 		"uglify-js": "2.x.x",
 		"yuidocjs": "0.x.x"
 	}
-
 }

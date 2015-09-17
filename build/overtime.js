@@ -1,18 +1,12 @@
 /**
- * overtime v0.1.0 build Sep 16 2015
+ * overtime v0.1.1 build Sep 18 2015
  * https://github.com/vanruesc/overtime
- * Copyright 2015 Raoul van Rueschen, Zlib
- */
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Overtime = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/**
- * eventdispatcher v0.1.5 build Sep 16 2015
- * https://github.com/vanruesc/eventdispatcher
  * Copyright 2015 Raoul van Rueschen, Zlib
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
-	global.EventDispatcher = factory();
+	global.Overtime = factory();
 }(this, function () { 'use strict';
 
 	/**
@@ -148,596 +142,581 @@
 
 	};
 
-	return EventDispatcher;
-
-}));
-},{}],2:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports["default"] = Overtime;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var _zayeshEventdispatcher = require("@zayesh/eventdispatcher");
-
-var _zayeshEventdispatcher2 = _interopRequireDefault(_zayeshEventdispatcher);
-
-/**
- * A time limit visualization library.
- *
- * @class Overtime
- * @constructor
- * @param {Object} [options] - The settings.
- * @param {Number} [options.time] - The time limit.
- * @param {Number} [options.canvas] - The canvas to use. A new one will be created if none is supplied.
- * @param {Boolean} [options.clearCanvas=true] - Whether the canvas should be cleared before rendering.
- * @param {Array} [options.size] - The size of the canvas.
- * @param {Overtime.TimeMeasure} [options.timeMeasure=Overtime.TimeMeasure.SECONDS] - The time measure of the supplied time limit.
- */
-
-function Overtime(options) {
-
-	var self = this,
-	    o;
-
-	_zayeshEventdispatcher2["default"].call(this);
-
 	/**
-  * PI * 2.
-  *
-  * @property TWO_PI
-  * @type Number
-  * @private
-  * @final
-  */
+	 * A time limit visualization library.
+	 *
+	 * @class Overtime
+	 * @constructor
+	 * @param {Object} [options] - The settings.
+	 * @param {Number} [options.time] - The time limit.
+	 * @param {Number} [options.canvas] - The canvas to use. A new one will be created if none is supplied.
+	 * @param {Boolean} [options.clearCanvas=true] - Whether the canvas should be cleared before rendering.
+	 * @param {Array} [options.size] - The size of the canvas.
+	 * @param {Overtime.TimeMeasure} [options.timeMeasure=Overtime.TimeMeasure.SECONDS] - The time measure of the supplied time limit.
+	 */
 
-	this.TWO_PI = Math.PI * 2.0;
+	function Overtime(options) {
 
-	/**
-  * PI / 2.
-  *
-  * @property HALF_PI
-  * @type Number
-  * @private
-  * @final
-  */
+		var self = this, o;
 
-	this.HALF_PI = Math.PI * 0.5;
+		EventDispatcher.call(this);
 
-	/**
-  * Clear canvas flag.
-  *
-  * @property clearCanvas
-  * @type Boolean
-  */
+		/**
+		 * PI * 2.
+		 *
+		 * @property TWO_PI
+		 * @type Number
+		 * @private
+		 * @final
+		 */
 
-	this.clearCanvas = true;
+		this.TWO_PI = Math.PI * 2.0;
 
-	/**
-  * Animation id of the currently requested frame.
-  *
-  * @property animId
-  * @type Number
-  * @private
-  */
+		/**
+		 * PI / 2.
+		 *
+		 * @property HALF_PI
+		 * @type Number
+		 * @private
+		 * @final
+		 */
 
-	this.animId = 0;
+		this.HALF_PI = Math.PI * 0.5;
 
-	/**
-  * Used for time-based rendering.
-  *
-  * @property now
-  * @type Number
-  * @private
-  */
+		/**
+		 * Clear canvas flag.
+		 *
+		 * @property clearCanvas
+		 * @type Boolean
+		 */
 
-	this.now = Date.now();
+		this.clearCanvas = true;
 
-	/**
-  * Used for time-based rendering.
-  *
-  * @property then
-  * @type Number
-  * @private
-  */
+		/**
+		 * Animation id of the currently requested frame.
+		 *
+		 * @property animId
+		 * @type Number
+		 * @private
+		 */
 
-	this.then = this.now;
+		this.animId = 0;
 
-	/**
-  * The rendering context.
-  *
-  * @property ctx
-  * @type CanvasRenderingContext2D
-  * @private
-  */
+		/**
+		 * Used for time-based rendering.
+		 *
+		 * @property now
+		 * @type Number
+		 * @private
+		 */
 
-	this.ctx = null;
+		this.now = Date.now();
 
-	// Set the initial canvas.
-	this.canvas = document.createElement("canvas");
+		/**
+		 * Used for time-based rendering.
+		 *
+		 * @property then
+		 * @type Number
+		 * @private
+		 */
 
-	/**
-  * the start angle.
-  *
-  * @property startAngle
-  * @type Number
-  * @private
-  */
+		this.then = this.now;
 
-	this.startAngle = -this.HALF_PI;
+		/**
+		 * The rendering context.
+		 *
+		 * @property ctx
+		 * @type CanvasRenderingContext2D
+		 * @private
+		 */
 
-	/**
-  * A float threshold for the chrome rendering hack.
-  *
-  * @property threshold
-  * @type Number
-  * @private
-  */
+		this.ctx = null;
 
-	this.threshold = 0.023;
+		// Set the initial canvas.
+		this.canvas = document.createElement("canvas");
 
-	/**
-  * Radians of the full circle plus the start angle.
-  *
-  * @property fullCircle
-  * @type Number
-  * @private
-  */
+		/**
+		 * the start angle.
+		 *
+		 * @property startAngle
+		 * @type Number
+		 * @private
+		 */
 
-	this.fullCircle = this.startAngle + this.TWO_PI;
+		this.startAngle = -this.HALF_PI;
 
-	/**
-  * Colour of the progressing circle.
-  *
-  * @property primaryStrokeStyle
-  * @type String
-  * @default rgba(255, 100, 0, 0.9)
-  */
+		/**
+		 * A float threshold for the chrome rendering hack.
+		 *
+		 * @property threshold
+		 * @type Number
+		 * @private
+		 */
 
-	this.primaryStrokeStyle = "rgba(255, 100, 0, 0.9)";
+		this.threshold = 0.023;
 
-	/**
-  * Colour of the empty circle.
-  *
-  * @property secondaryStrokeStyle
-  * @type String
-  * @default rgba(0, 0, 0, 0.1)
-  */
+		/**
+		 * Radians of the full circle plus the start angle.
+		 *
+		 * @property fullCircle
+		 * @type Number
+		 * @private
+		 */
 
-	this.secondaryStrokeStyle = "rgba(0, 0, 0, 0.1)";
+		this.fullCircle = this.startAngle + this.TWO_PI;
 
-	/**
-  * Returns the remaining time.
-  *
-  * @event update
-  * @param {Number} time - The remaining time.
-  */
+		/**
+		 * Colour of the progressing circle.
+		 *
+		 * @property primaryStrokeStyle
+		 * @type String
+		 * @default rgba(255, 100, 0, 0.9)
+		 */
 
-	this.updateEvent = { type: "update", time: 0 };
+		this.primaryStrokeStyle = "rgba(255, 100, 0, 0.9)";
 
-	/**
-  * The currently set time measure.
-  *
-  * @property tm
-  * @type Overtime.TimeMeasure
-  * @private
-  */
+		/**
+		 * Colour of the empty circle.
+		 *
+		 * @property secondaryStrokeStyle
+		 * @type String
+		 * @default rgba(0, 0, 0, 0.1)
+		 */
 
-	this.tm = Overtime.TimeMeasure.MILLISECONDS;
+		this.secondaryStrokeStyle = "rgba(0, 0, 0, 0.1)";
 
-	/**
-  * The remaining time in milliseconds.
-  *
-  * @property t
-  * @type Number
-  * @private
-  */
+		/**
+		 * Returns the remaining time.
+		 *
+		 * @event update
+		 * @param {Number} time - The remaining time.
+		 */
 
-	this.t = 1;
+		this.updateEvent = {type: "update", time: 0};
 
-	// Overwrite the defaults.
-	if (options !== undefined) {
+		/**
+		 * The currently set time measure.
+		 *
+		 * @property tm
+		 * @type Overtime.TimeMeasure
+		 * @private
+		 */
 
-		if (options.timeMeasure > 0) {
-			this.tm = options.timeMeasure;
+		this.tm = Overtime.TimeMeasure.MILLISECONDS;
+
+		/**
+		 * The remaining time in milliseconds.
+		 *
+		 * @property t
+		 * @type Number
+		 * @private
+		 */
+
+		this.t = 1;
+
+		// Overwrite the defaults.
+		if(options !== undefined) {
+
+			if(options.timeMeasure > 0) { this.tm = options.timeMeasure; }
+			if(options.time > 0) { this.t = options.time; }
+			if(options.canvas !== undefined) { this.canvas = options.canvas; }
+			this.size = options.size;
+
 		}
-		if (options.time > 0) {
-			this.t = options.time;
+
+		// Update the time.
+		this.t *= this.tm;
+
+		/**
+		 * The total time.
+		 *
+		 * @property T
+		 * @type Number
+		 * @private
+		 */
+
+		this.T = this.t;
+
+		// Try to recover time values from a previous session.
+		if(localStorage.getItem("overtime")) {
+
+			try {
+
+				o = JSON.parse(localStorage.getItem("overtime"));
+				if(o.tm !== undefined) { this.tm = o.tm; }
+				if(o.t !== undefined) { this.t = o.t; }
+				if(o.T !== undefined) { this.T = o.T; }
+
+			} catch(e) { /* Swallow. */ }
+
 		}
-		if (options.canvas !== undefined) {
-			this.canvas = options.canvas;
-		}
-		this.size = options.size;
+
+		/**
+		 * Stores the time values for the next session.
+		 *
+		 * @method persist
+		 * @private
+		 */
+
+		window.addEventListener("unload", function persist() {
+
+			localStorage.setItem("overtime", JSON.stringify({
+				tm: self.tm,
+				t: self.t,
+				T: self.T
+			}));
+
+		});
+
+		/**
+		 * The update function.
+		 *
+		 * @method update
+		 */
+
+		this.update = function() { self._update(); };
+
 	}
 
-	// Update the time.
-	this.t *= this.tm;
+	Overtime.prototype = Object.create(EventDispatcher.prototype);
+	Overtime.prototype.constructor = Overtime;
 
 	/**
-  * The total time.
-  *
-  * @property T
-  * @type Number
-  * @private
-  */
+	 * The internal canvas.
+	 *
+	 * @property canvas
+	 * @type HTMLCanvasElement
+	 */
 
-	this.T = this.t;
+	Object.defineProperty(Overtime.prototype, "canvas", {
 
-	// Try to recover time values from a previous session.
-	if (localStorage.getItem("overtime")) {
+		get: function() { return this.ctx.canvas; },
 
-		try {
+		set: function(c) {
 
-			o = JSON.parse(localStorage.getItem("overtime"));
-			if (o.tm !== undefined) {
-				this.tm = o.tm;
+			if(c !== undefined && c.getContext !== undefined) {
+
+				this.stop();
+				this.ctx = c.getContext("2d");
+				this.ctx.strokeStyle = this.primaryStrokeStyle;
+				this.size = [c.width, c.height];
+
 			}
-			if (o.t !== undefined) {
-				this.t = o.t;
-			}
-			if (o.T !== undefined) {
-				this.T = o.T;
-			}
-		} catch (e) {/* Swallow. */}
-	}
 
-	/**
-  * Stores the time values for the next session.
-  *
-  * @method persist
-  * @private
-  */
+		}
 
-	window.addEventListener("unload", function persist() {
-
-		localStorage.setItem("overtime", JSON.stringify({
-			tm: self.tm,
-			t: self.t,
-			T: self.T
-		}));
 	});
 
 	/**
-  * The update function.
-  *
-  * @method update
-  */
+	 * The time. When set, the given value will be translated to the current time measure.
+	 *
+	 * @property time
+	 * @type Number
+	 */
 
-	this.update = function () {
-		self._update();
-	};
-}
+	Object.defineProperty(Overtime.prototype, "time", {
 
-Overtime.prototype = Object.create(_zayeshEventdispatcher2["default"].prototype);
-Overtime.prototype.constructor = Overtime;
+		get: function() { return this.t; },
 
-/**
- * The internal canvas.
- *
- * @property canvas
- * @type HTMLCanvasElement
- */
+		set: function(t) {
 
-Object.defineProperty(Overtime.prototype, "canvas", {
+			if(t >= 0) {
 
-	get: function get() {
-		return this.ctx.canvas;
-	},
+				this.stop();
+				this.t = t * this.tm;
+				this.T = this.t;
+				this._render();
 
-	set: function set(c) {
+			}
 
-		if (c !== undefined && c.getContext !== undefined) {
-
-			this.stop();
-			this.ctx = c.getContext("2d");
-			this.ctx.strokeStyle = this.primaryStrokeStyle;
-			this.size = [c.width, c.height];
 		}
-	}
 
-});
+	});
 
-/**
- * The time. When set, the given value will be translated to the current time measure.
- *
- * @property time
- * @type Number
- */
+	/**
+	 * The current time measure.
+	 * The current time will not be affected by this in any way.
+	 *
+	 * @property timeMeasure
+	 * @type Overtime.TimeMeasure
+	 */
 
-Object.defineProperty(Overtime.prototype, "time", {
+	Object.defineProperty(Overtime.prototype, "timeMeasure", {
 
-	get: function get() {
-		return this.t;
-	},
+		get: function() { return this.tm; },
 
-	set: function set(t) {
+		set: function(tm) {
 
-		if (t >= 0) {
+			if(tm > 0) {
 
-			this.stop();
-			this.t = t * this.tm;
-			this.T = this.t;
-			this._render();
+				this.tm = tm;
+
+			}
+
 		}
-	}
 
-});
+	});
 
-/**
- * The current time measure.
- * The current time will not be affected by this in any way.
- *
- * @property timeMeasure
- * @type Overtime.TimeMeasure
- */
+	/**
+	 * The size of the canvas.
+	 *
+	 * @property size
+	 * @type Number
+	 * @example
+	 *  [width, height]
+	 */
 
-Object.defineProperty(Overtime.prototype, "timeMeasure", {
+	Object.defineProperty(Overtime.prototype, "size", {
 
-	get: function get() {
-		return this.tm;
-	},
+		get: function() {
 
-	set: function set(tm) {
+			return [
+				this.ctx.canvas.width,
+				this.ctx.canvas.height
+			];
 
-		if (tm > 0) {
+		},
 
-			this.tm = tm;
+		set: function(s) {
+
+			if(s !== undefined) {
+
+				this.ctx.canvas.width = s[0];
+				this.ctx.canvas.height = s[1];
+				this.ctx.lineWidth = (s[0] < s[1]) ? s[0] * 0.05 : s[1] * 0.05;
+				this._render();
+
+			}
+
 		}
-	}
 
-});
+	});
 
-/**
- * The size of the canvas.
- *
- * @property size
- * @type Number
- * @example
- *  [width, height]
- */
+	/**
+	 * Renders the time progress on the canvas.
+	 *
+	 * @method _render
+	 * @private
+	 */
 
-Object.defineProperty(Overtime.prototype, "size", {
+	Overtime.prototype._render = function() {
 
-	get: function get() {
+		var ctx = this.ctx,
+			w = ctx.canvas.width,
+			h = ctx.canvas.height,
+			hw = w >> 1, hh = h >> 1,
+			radius = w < h ? hw : hh,
+			endAngle,
+			tooThin; // Chrome hack.
 
-		return [this.ctx.canvas.width, this.ctx.canvas.height];
-	},
+		if(this.clearCanvas) { ctx.clearRect(0, 0, w, h); }
 
-	set: function set(s) {
+		// Don't bleed over the edge.
+		radius -= ctx.lineWidth;
 
-		if (s !== undefined) {
-
-			this.ctx.canvas.width = s[0];
-			this.ctx.canvas.height = s[1];
-			this.ctx.lineWidth = s[0] < s[1] ? s[0] * 0.05 : s[1] * 0.05;
-			this._render();
-		}
-	}
-
-});
-
-/**
- * Renders the time progress on the canvas.
- *
- * @method _render
- * @private
- */
-
-Overtime.prototype._render = function () {
-
-	var ctx = this.ctx,
-	    w = ctx.canvas.width,
-	    h = ctx.canvas.height,
-	    hw = w >> 1,
-	    hh = h >> 1,
-	    radius = w < h ? hw : hh,
-	    endAngle,
-	    tooThin; // Chrome hack.
-
-	if (this.clearCanvas) {
-		ctx.clearRect(0, 0, w, h);
-	}
-
-	// Don't bleed over the edge.
-	radius -= ctx.lineWidth;
-
-	// Draw the progress.
-	endAngle = this.startAngle + this.TWO_PI * ((this.T - this.t) / this.T);
-	tooThin = endAngle - this.startAngle < this.threshold; // Chrome hack.
-	ctx.strokeStyle = this.primaryStrokeStyle;
-	ctx.beginPath();
-	ctx.arc(hw, hh, radius, tooThin ? this.startAngle - this.threshold : this.startAngle, endAngle, false); // Chrome hack.
-	//ctx.arc(hw, hh, radius, this.startAngle, endAngle, false);
-	ctx.stroke();
-
-	if (tooThin) {
-		ctx.clearRect(0, 0, hw - this.threshold, hh);
-	} // Chrome hack.
-
-	// Draw the rest of the circle in another color.
-	if (endAngle < this.fullCircle) {
-
-		// No hacking here cause can't clear.
-		ctx.strokeStyle = this.secondaryStrokeStyle;
+		// Draw the progress.
+		endAngle = this.startAngle + this.TWO_PI * ((this.T - this.t) / this.T);
+		tooThin = (endAngle - this.startAngle < this.threshold); // Chrome hack.
+		ctx.strokeStyle = this.primaryStrokeStyle;
 		ctx.beginPath();
-		ctx.arc(hw, hh, radius, endAngle, this.fullCircle, false);
+		ctx.arc(hw, hh, radius, tooThin ? this.startAngle - this.threshold : this.startAngle, endAngle, false); // Chrome hack.
+		//ctx.arc(hw, hh, radius, this.startAngle, endAngle, false);
 		ctx.stroke();
-	}
-};
 
-/**
- * Steps the system forward.
- * This is the main loop.
- *
- * @method _update
- * @private
- */
+		if(tooThin) { ctx.clearRect(0, 0, hw - this.threshold, hh); } // Chrome hack.
 
-Overtime.prototype._update = function () {
+		// Draw the rest of the circle in another color.
+		if(endAngle < this.fullCircle) {
 
-	var elapsed;
+			// No hacking here cause can't clear.
+			ctx.strokeStyle = this.secondaryStrokeStyle;
+			ctx.beginPath();
+			ctx.arc(hw, hh, radius, endAngle, this.fullCircle, false);
+			ctx.stroke();
 
-	// Calculate the time span between this run and the last.
-	this.now = Date.now();
-	elapsed = this.now - this.then;
-	this.then = this.now;
+		}
 
-	// Update the time.
-	this.t -= elapsed;
-	if (this.t < 0) {
-		this.t = 0;
-	}
-	this.updateEvent.time = this.t;
-	this.dispatchEvent(this.updateEvent);
+	};
 
-	// Render the time.
-	this._render();
+	/**
+	 * Steps the system forward.
+	 * This is the main loop.
+	 *
+	 * @method _update
+	 * @private
+	 */
 
-	// Continue or exit.
-	if (this.t > 0) {
+	Overtime.prototype._update = function() {
 
-		this.animId = requestAnimationFrame(this.update);
-	} else {
+		var elapsed;
 
-		this.dispatchEvent({ type: "elapsed" });
-	}
-};
+		// Calculate the time span between this run and the last.
+		this.now = Date.now();
+		elapsed = this.now - this.then;
+		this.then = this.now;
 
-/**
- * Stops the rendering cycle. Does nothing else besides that.
- *
- * @method stop
- */
+		// Update the time.
+		this.t -= elapsed;
+		if(this.t < 0) { this.t = 0; }
+		this.updateEvent.time = this.t;
+		this.dispatchEvent(this.updateEvent);
 
-Overtime.prototype.stop = function () {
+		// Render the time.
+		this._render();
 
-	if (this.animId !== 0) {
+		// Continue or exit.
+		if(this.t > 0) {
 
-		cancelAnimationFrame(this.animId);
-		this.animId = 0;
-	}
-};
+			this.animId = requestAnimationFrame(this.update);
 
-/**
- * Tries to start the rendering cycle if it isn't
- * running. Otherwise it restarts it.
- *
- * @method start
- */
+		} else {
 
-Overtime.prototype.start = function () {
+			this.dispatchEvent({type: "elapsed"});
 
-	this.stop();
-	this.now = Date.now();
-	this.then = this.now;
-	this.update();
-};
+		}
 
-/**
- * Sets the time back to its original length.
- *
- * @method rewind
- */
+	};
 
-Overtime.prototype.rewind = function () {
+	/**
+	 * Stops the rendering cycle. Does nothing else besides that.
+	 *
+	 * @method stop
+	 */
 
-	this.stop();
-	this.t = this.T;
-	this._render();
-};
+	Overtime.prototype.stop = function() {
 
-/**
- * Sets the time back by the given value.
- * The time will not go back beyond the initial length.
- *
- * @method rewindBy
- * @param {Number} t - The time by which to rewind. Interpreted according to the current time measure. A negative value corresponds to fast-forwarding.
- */
+		if(this.animId !== 0) {
 
-Overtime.prototype.rewindBy = function (t) {
+			cancelAnimationFrame(this.animId);
+			this.animId = 0;
 
-	if (typeof t === "number" && !isNaN(t) && t !== 0) {
+		}
+
+	};
+
+	/**
+	 * Tries to start the rendering cycle if it isn't
+	 * running. Otherwise it restarts it.
+	 *
+	 * @method start
+	 */
+
+	Overtime.prototype.start = function() {
 
 		this.stop();
-		this.t += t * this.tm;
-		if (this.t > this.T) {
-			this.t = this.T;
-		}
-		this._render();
-	}
-};
+		this.now = Date.now();
+		this.then = this.now;
+		this.update();
 
-/**
- * Goes ahead in time by a given value.
- *
- * @method advanceBy
- * @param {Number} t - The time value by which to rewind. Will be interpreted according to the current time measure. A negative value corresponds to rewinding.
- */
+	};
 
-Overtime.prototype.advanceBy = function (t) {
+	/**
+	 * Sets the time back to its original length.
+	 *
+	 * @method rewind
+	 */
 
-	if (typeof t === "number" && !isNaN(t)) {
-
-		this.rewindBy(-t);
-	}
-};
-
-/**
- * Adds time.
- *
- * @method prolongBy
- * @param {Number} t - The time value to add. Will be interpreted according to the current time measure. A negative value corresponds to shortening.
- */
-
-Overtime.prototype.prolongBy = function (t) {
-
-	if (typeof t === "number" && !isNaN(t) && t !== 0) {
+	Overtime.prototype.rewind = function() {
 
 		this.stop();
-		t *= this.tm;
-		this.t += t;
-		this.T += t;
-		if (this.T < 0) {
-			this.T = this.t = 0;
-		}
+		this.t = this.T;
 		this._render();
-	}
-};
 
-/**
- * Reduces the total duration of the countdown.
- *
- * @method shortenBy
- * @param {Number} t - The time value to subtract. Will be interpreted according to the current time measure. A negative value corresponds to prolonging.
- */
+	};
 
-Overtime.prototype.shortenBy = function (t) {
+	/**
+	 * Sets the time back by the given value.
+	 * The time will not go back beyond the initial length.
+	 *
+	 * @method rewindBy
+	 * @param {Number} t - The time by which to rewind. Interpreted according to the current time measure. A negative value corresponds to fast-forwarding.
+	 */
 
-	if (typeof t === "number" && !isNaN(t)) {
+	Overtime.prototype.rewindBy = function(t) {
 
-		this.prolongBy(-t);
-	}
-};
+		if(typeof t === "number" && !isNaN(t) && t !== 0) {
 
-/**
- * Enumeration of time measure constants.
- *
- * @property TimeMeasure
- * @type Object
- * @static
- * @final
- */
+			this.stop();
+			this.t += t * this.tm;
+			if(this.t > this.T) { this.t = this.T; }
+			this._render();
 
-Overtime.TimeMeasure = Object.freeze({
-	MILLISECONDS: 1,
-	SECONDS: 1000,
-	MINUTES: 60000,
-	HOURS: 3600000
-});
-module.exports = exports["default"];
+		}
 
-},{"@zayesh/eventdispatcher":1}]},{},[2])(2)
-});
+	};
+
+	/**
+	 * Goes ahead in time by a given value.
+	 *
+	 * @method advanceBy
+	 * @param {Number} t - The time value by which to rewind. Will be interpreted according to the current time measure. A negative value corresponds to rewinding.
+	 */
+
+	Overtime.prototype.advanceBy = function(t) {
+
+		if(typeof t === "number" && !isNaN(t)) {
+
+			this.rewindBy(-t);
+
+		}
+
+	};
+
+	/**
+	 * Adds time.
+	 *
+	 * @method prolongBy
+	 * @param {Number} t - The time value to add. Will be interpreted according to the current time measure. A negative value corresponds to shortening.
+	 */
+
+	Overtime.prototype.prolongBy = function(t) {
+
+		if(typeof t === "number" && !isNaN(t) && t !== 0) {
+
+			this.stop();
+			t *= this.tm;
+			this.t += t;
+			this.T += t;
+			if(this.T < 0) { this.T = this.t = 0; }
+			this._render();
+
+		}
+
+	};
+
+	/**
+	 * Reduces the total duration of the countdown.
+	 *
+	 * @method shortenBy
+	 * @param {Number} t - The time value to subtract. Will be interpreted according to the current time measure. A negative value corresponds to prolonging.
+	 */
+
+	Overtime.prototype.shortenBy = function(t) {
+
+		if(typeof t === "number" && !isNaN(t)) {
+
+			this.prolongBy(-t);
+
+		}
+
+	};
+
+	/**
+	 * Enumeration of time measure constants.
+	 *
+	 * @property TimeMeasure
+	 * @type Object
+	 * @static
+	 * @final
+	 */
+
+	Overtime.TimeMeasure = Object.freeze({
+		MILLISECONDS: 1,
+		SECONDS: 1000,
+		MINUTES: 60000,
+		HOURS: 3600000
+	});
+
+	return Overtime;
+
+}));
