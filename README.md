@@ -1,5 +1,6 @@
 # Overtime 
-[![Build Status](https://travis-ci.org/vanruesc/overtime.svg?branch=master)](https://travis-ci.org/vanruesc/overtime) 
+[![Build status](https://travis-ci.org/vanruesc/overtime.svg?branch=master)](https://travis-ci.org/vanruesc/overtime) 
+[![Windows build status](https://ci.appveyor.com/api/projects/status/t7fv9k65w0wmyfea?svg=true)](https://ci.appveyor.com/project/vanruesc/overtime) 
 [![GitHub version](https://badge.fury.io/gh/vanruesc%2Fovertime.svg)](http://badge.fury.io/gh/vanruesc%2Fovertime) 
 [![npm version](https://badge.fury.io/js/overtime.svg)](http://badge.fury.io/js/overtime) 
 [![Dependencies](https://david-dm.org/vanruesc/overtime.svg?branch=master)](https://david-dm.org/vanruesc/overtime)
