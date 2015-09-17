@@ -4,6 +4,7 @@
   "description": "Overtime is a stopwatch library that visualises time limits in 2D.",
   "homepage": "https://github.com/vanruesc/overtime",
   "main": "build/overtime",
+	"jsnext:main": "src/overtime",
   "license": "Zlib",
 
   "keywords": [
@@ -32,11 +33,12 @@
 		"jshint:test": "jshint test",
 		"jshint:lib": "jshint src",
 		"jshint": "npm run jshint:banner && npm run jshint:test && npm run jshint:lib",
+		"browserify": "mkdirp build && browserify src/overtime.js -t babelify -s Overtime -o build/overtime.js",
 		"uglify": "uglifyjs build/overtime.js -c -m -o build/overtime.min.js",
 		"mocha": "mocha test",
 		"yuidoc": "yuidoc src -q -c yuidoc.json",
 		"prebuild": "npm run jshint",
-		"build": "mkdirp build && browserify src/overtime.js -t babelify -s Overtime -o build/overtime.js",
+		"build": "npm run browserify",
 		"postbuild": "npm run uglify && node banner.js",
 		"pretest": "npm run build",
 		"test": "npm run mocha"
