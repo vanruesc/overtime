@@ -33,7 +33,7 @@
 		"jshint:test": "jshint test",
 		"jshint:lib": "jshint src",
 		"jshint": "npm run jshint:banner && npm run jshint:test && npm run jshint:lib",
-		"rollup": "node build.js",
+		"rollup": "rollup -f umd -n Overtime -i src/overtime.js -o build/overtime.js",
 		"uglify": "uglifyjs build/overtime.js -c -m -o build/overtime.min.js",
 		"mocha": "mocha test",
 		"yuidoc": "yuidoc src -q -c yuidoc.json",
