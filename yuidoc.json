@@ -1,7 +1,7 @@
 {
 	"name": "Overtime API",
 	"description": "Overtime is a stopwatch library that visualises time limits in 2D.",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"url": "https://github.com/vanruesc/overtime",
 	"options": {
 		"outdir": "docs"

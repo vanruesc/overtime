@@ -1,13 +1,9 @@
 /**
- * overtime v0.1.1 build Sep 18 2015
+ * overtime v0.1.2 build Sep 20 2015
  * https://github.com/vanruesc/overtime
  * Copyright 2015 Raoul van Rueschen, Zlib
  */
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	global.Overtime = factory();
-}(this, function () { 'use strict';
+var Overtime = (function () { 'use strict';
 
 	/**
 	 * A base class for adding and removing event listeners and dispatching events.
@@ -719,4 +715,4 @@
 
 	return Overtime;
 
-}));
+})();
