@@ -7,6 +7,7 @@
 
 Overtime is a stopwatch library that visualises time limits in 2D by using the Canvas API.
 
+
 ## Installation
 
 Download the [minified library](http://vanruesc.github.io/overtime/build/overtime.min.js) and include it in your project:
@@ -20,6 +21,7 @@ You can also install it with [npm](https://www.npmjs.com).
 ```sh
 $ npm install overtime
 ``` 
+
 
 ## Usage
 
@@ -76,17 +78,15 @@ document.addEventListener("DOMContentLoaded", function init() {
 ## Example
 Take a look at the [demo](https://vanruesc.github.io/overtime/demo) to see how Overtime works.
 
+
 ## Documentation
 [API](http://vanruesc.github.io/overtime/docs)
+
 
 ## Contributing
 Maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code.
 
-## Release History
-_Version: 0.0.0 (28.06.2015)_
-> The library visualises the time progression correctly and 
-> restores its context after the browser has been closed.
 
 ## License
-Copyright (c) 2015 Raoul van Rüschen  
+Copyright (c) 2015 Raoul van Rueschen  
 Licensed under the Zlib license.

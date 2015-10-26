@@ -1,5 +1,5 @@
 /**
- * overtime v0.1.2 build Sep 20 2015
+ * overtime v0.1.3 build Oct 26 2015
  * https://github.com/vanruesc/overtime
  * Copyright 2015 Raoul van Rueschen, Zlib
  */
