@@ -22,7 +22,7 @@ body {
  font-family: sans-serif;
  font-weight: 100;
  color: rgb(234, 83, 31);
- background-color: rgb(230, 230, 230);
+ background-color: rgb(240, 240, 240);
  margin: 0;
  padding: 0;
  text-align: left;
@@ -64,7 +64,7 @@ div[role="contentinfo"] {
 #container {
  position: relative;
  float: right;
- width: 70%;
+ width: 60%;
  height: 100%;
 }
 
