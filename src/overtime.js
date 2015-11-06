@@ -1,4 +1,4 @@
-import EventDispatcher from "@zayesh/eventdispatcher";
+import EventDispatcher from "@vanruesc/eventdispatcher";
 
 /**
  * A time limit visualization library.
