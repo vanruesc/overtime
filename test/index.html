@@ -4,8 +4,8 @@
 		<title>Mocha</title>
 		<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
 		<script src="../node_modules/mocha/mocha.js"></script>
-		<script>mocha.setup("bdd")</script>
-		<script> function assert(expr, msg) { if (!expr) throw new Error(msg || "failed"); } </script>
+		<script>mocha.setup("bdd");</script>
+		<script>function assert(expr, msg) { if (!expr) { throw new Error(msg || "failed"); } }</script>
 		<script src="polyfill.js"></script>
 		<script src="../build/overtime.js"></script>
 		<script src="overtime.test.js"></script>
